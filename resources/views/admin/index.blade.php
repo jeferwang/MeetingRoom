@@ -17,7 +17,7 @@
 			</div>
 			<ul class="list-group">
 				<li class="list-group-item">当前管理员：{{\Illuminate\Support\Facades\Cookie::get('admin_login')['admin_name']}}</li>
-				<li class="list-group-item">管理员ID：{{\Illuminate\Support\Facades\Cookie::get('admin_login')['admin_name']}}</li>
+				<li class="list-group-item">管理员ID：{{\Illuminate\Support\Facades\Cookie::get('admin_login')['admin_id']}}</li>
 			</ul>
 		</div>
 	</div>

@@ -125,7 +125,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 							</div>
 							<div class="divider2"></div>
 							<li class="active">
-								<a href="{{route('adminindex')}}">
+								<a href="{{route('admin.index')}}">
 									<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
 								</a>
 							</li>

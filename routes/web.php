@@ -10,7 +10,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 	Route::get('logout', 'LoginController@logout')->name('logout');
 	// 登录后
 	Route::group(['middleware' => ['admin_login']], function () {
+		// 后台首页
 		Route::get('index', 'AdminController@index')->name('index');
+		// 管理员账户模块
+		Route::group(['prefix'=>'account','as'=>'account.'], function () {
+			Route::match(['get','post'],'changeinfo', 'AdminController@changeInfo')->name('change_info');
+		});
 	});
 });
 

@@ -54,7 +54,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
-
+	@yield('head')
 </head>
 
 <body>
@@ -134,7 +134,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 									<i class="fa fa-user" aria-hidden="true"></i><span>管理员设置</span>
 								</a>
 								<ul class="nav nav-children">
-									<li><a href="icons-glyphicons.html"><span class="text"> 修改用户名&密码</span></a></li>
+									<li><a href="{{route('admin.account.change_info')}}"><span class="text"> 修改用户名&密码</span></a></li>
 								</ul>
 							</li>
 						</ul>
@@ -215,7 +215,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 <script src="/assets/js/core.min.js"></script>
 
 <!-- end: JavaScript-->
-
+@yield('foot')
 </body>
 
 </html>

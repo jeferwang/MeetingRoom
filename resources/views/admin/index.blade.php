@@ -6,6 +6,11 @@
 
 @section('content')
 	<div class="row">
+		<div class="alert alert-danger">
+			提示：管理系统需要至少IE9以上的浏览器支持，请使用最新版的 360浏览器（极速模式）、QQ浏览器（极速模式）、Chrome、Firefox 等进行操作
+		</div>
+	</div>
+	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				账户信息

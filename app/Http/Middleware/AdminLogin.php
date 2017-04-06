@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Admin;
 use Closure;
 
 class AdminLogin
@@ -15,7 +16,10 @@ class AdminLogin
 	 */
 	public function handle($request, Closure $next)
 	{
-		if (!$request->cookie('admin_login')) {
+		$admin_login = $request->cookie('admin_login');
+		$admin_name = $admin_login['admin_name'];
+		$check = Admin::where('admin_name', $admin_name)->first();
+		if (!$admin_login || !$admin_name || !$check) {
 			return redirect(route('admin.logout'));
 		}
 		return $next($request);

@@ -1,7 +1,4 @@
 @extends('layouts.admin')
-@section('head')
-	<link rel="stylesheet" href="/assets/layui/css/layui.css">
-@endsection
 @section('title')
 	修改管理员信息
 @endsection
@@ -64,8 +61,6 @@
 	</div>
 @endsection
 @section('foot')
-	<script src="/assets/jqueryForm/jquery.form.min.js"></script>
-	<script src="/assets/layui/lay/dest/layui.all.js"></script>
 	<script>
 		var layer = layui.layer;
 		$().ready(function () {

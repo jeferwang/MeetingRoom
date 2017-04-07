@@ -6,7 +6,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 <html lang="en">
 
 <head>
-	
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
 	<!-- Basic -->
 	<meta charset="UTF-8"/>
 	
@@ -38,7 +38,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 	
 	<!-- Theme CSS -->
 	<link href="/assets/css/jquery.mmenu.css" rel="stylesheet"/>
-	
+	<link rel="stylesheet" href="/assets/layui/css/layui.css">
 	<!-- Page CSS -->
 	<link href="/assets/css/style.css" rel="stylesheet"/>
 	<link href="/assets/css/add-ons.min.css" rel="stylesheet"/>
@@ -137,6 +137,34 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 									<li><a href="{{route('admin.account.change_info')}}"><span class="text"> 修改用户名&密码</span></a></li>
 								</ul>
 							</li>
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-university" aria-hidden="true"></i><span>活动室管理</span>
+								</a>
+								<ul class="nav nav-children">
+									<li><a href="{{route('admin.room.index')}}"><span class="text"> 查看活动室列表</span></a></li>
+									<li><a href="{{route('admin.room.add')}}"><span class="text"> 添加活动室</span></a></li>
+								</ul>
+							</li>
+							{{--<li class="nav-parent">--}}
+							{{--<a>--}}
+							{{--<i class="fa fa-clock-o" aria-hidden="true"></i><span>时间段管理</span>--}}
+							{{--</a>--}}
+							{{--<ul class="nav nav-children">--}}
+							{{--<li><a href="javascript:void(0)"><span class="text"> 当前所有时间段</span></a></li>--}}
+							{{--<li><a href="javascript:void(0)"><span class="text"> 新增时间段</span></a></li>--}}
+							{{--</ul>--}}
+							{{--</li>--}}
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-cog" aria-hidden="true"></i><span>其他内容管理</span>
+								</a>
+								<ul class="nav nav-children">
+									<li><a href="javascript:void(0)"><span class="text"> 公告</span></a></li>
+									<li><a href="javascript:void(0)"><span class="text"> 预约须知</span></a></li>
+									<li><a href="javascript:void(0)"><span class="text"> 管理办法</span></a></li>
+								</ul>
+							</li>
 						</ul>
 					</nav>
 				</div>
@@ -213,7 +241,9 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 <!-- Theme JS -->
 <script src="/assets/js/jquery.mmenu.min.js"></script>
 <script src="/assets/js/core.min.js"></script>
-
+{{--other--}}
+<script src="/assets/jqueryForm/jquery.form.min.js"></script>
+<script src="/assets/layui/lay/dest/layui.all.js"></script>
 <!-- end: JavaScript-->
 @yield('foot')
 </body>

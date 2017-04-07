@@ -12,7 +12,7 @@ class AdminController extends Controller
 	
 	public function index()
 	{
-		return view('admin.index');
+		return view('backend.admin.index');
 	}
 	
 	public function changeInfo(Request $request)
@@ -21,7 +21,7 @@ class AdminController extends Controller
 			return $this->change($request);
 		}
 		$admin = Admin::where('admin_name', Cookie::get('admin_login')['admin_name'])->first();
-		return view('admin.change_info', ['admin' => $admin]);
+		return view('backend.admin.change_info', ['admin' => $admin]);
 	}
 	
 	public function change(Request $request)

@@ -13,8 +13,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 		// 后台首页
 		Route::get('index', 'AdminController@index')->name('index');
 		// 管理员账户模块
-		Route::group(['prefix'=>'account','as'=>'account.'], function () {
-			Route::match(['get','post'],'changeinfo', 'AdminController@changeInfo')->name('change_info');
+		Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
+			Route::match(['get', 'post'], 'changeinfo', 'AdminController@changeInfo')->name('change_info');
+		});
+		// 活动室
+		Route::group(['prefix' => 'room', 'as' => 'room.'], function () {
+			Route::get('index', 'RoomController@index')->name('index');
+			Route::match(['get', 'post'], 'add', 'RoomController@add')->name('add');
 		});
 	});
 });

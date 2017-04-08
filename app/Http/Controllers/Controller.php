@@ -10,4 +10,13 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    
+    public $resp=[];
+	
+	public function setResp($arr)
+	{
+		foreach ($arr as $key=>$value) {
+			$this->resp[$key]=$value;
+		}
+    }
 }

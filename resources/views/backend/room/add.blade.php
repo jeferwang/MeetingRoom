@@ -3,7 +3,7 @@
 	添加活动室
 @endsection
 @section('breadcrumbs')
-	<li>添加活动室</li>
+	<li class="active">添加活动室</li>
 @endsection
 @section('content')
 	<div class="row">
@@ -15,7 +15,7 @@
 				</div>
 				<div class="form-group panel-body">
 					<label for="name" class="control-label">请填写新增的会议室的名称（必填），例如：行政楼一楼会议室</label>
-					<input type="text" name="name" id="name" class="form-control">
+					<input type="text" name="name" id="name" class="form-control" value="{{$type=='update'?$room->name:''}}">
 				</div>
 			</div>
 			<div class="panel panel-warning">
@@ -24,7 +24,7 @@
 				</div>
 				<div class="form-group panel-body">
 					<label for="address" class="control-label">请填写会议室的详细地址（可不填），例如：春秋大道与xxx交叉口北行政楼一楼101室</label>
-					<textarea name="address" id="address" class="form-control" rows="5"></textarea>
+					<textarea name="address" id="address" class="form-control" rows="5">{{$type=='update'?$room->address:''}}</textarea>
 				</div>
 			</div>
 			<div class="panel panel-danger">
@@ -33,11 +33,15 @@
 				</div>
 				<div class="form-group panel-body">
 					<label for="description" class="control-label">请填写会议室的用途/备注（可不填）</label>
-					<textarea name="description" id="description" class="form-control" rows="5"></textarea>
+					<textarea name="description" id="description" class="form-control" rows="5">{{$type=='update'?$room->description:''}}</textarea>
 				</div>
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn btn-success" value="添加条目" style="padding: 5px 40px;cursor: pointer;border-radius: 15px 0">
+				@if(!$type=='update')
+					<input type="submit" class="btn btn-success" value="添加条目" style="padding: 5px 40px;cursor: pointer;border-radius: 15px 0">
+				@else
+					<input type="submit" class="btn btn-warning" value="更新条目" style="padding: 5px 40px;cursor: pointer;border-radius: 15px 0">
+				@endif
 			</div>
 		</form>
 	</div>
@@ -59,10 +63,11 @@
 					layer.alert(data['msg'], {
 						icon: data['status'] ? 6 : 5
 						, btn: ['确定', '取消']
-						, yes: function () {
+						, yes: function (i) {
 							if (data['status']) {
 								location.href = "{{route('admin.room.index')}}";
 							}
+							layer.close(i);
 						}
 					})
 				},

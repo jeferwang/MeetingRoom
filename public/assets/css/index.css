@@ -1,0 +1,27 @@
+#description_1 {
+	text-align: center;
+}
+
+.time_block {
+	margin: 15px 30px;
+}
+
+#start_time, #end_time {
+	cursor: pointer;
+}
+
+.foot_btn {
+	margin: 15px;
+}
+.foot_btn .preview_block{
+	text-align: left;
+}
+.foot_btn .next_block{
+	text-align: right;
+}
+#content_3 .form-group{
+	margin: 30px auto;
+}
+#tab_block .panel-body{
+	/*min-height: 230px;*/
+}

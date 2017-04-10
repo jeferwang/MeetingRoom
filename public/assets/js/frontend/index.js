@@ -90,6 +90,12 @@ $("#main_form").on('submit', function (e) {
 			if (data.status) {
 				layer.alert(data.msg, {
 					icon: 6
+					,closeBtn:0
+					,btn:['确定']
+					,yes: function (i) {
+						layer.close(i);
+						location.href='/';
+					}
 				});
 			} else {
 				layer.alert(data.msg, {

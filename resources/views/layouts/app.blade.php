@@ -29,8 +29,10 @@
 		</div>
 		<div class="collapse navbar-collapse" id="example-navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="#">首页</a></li>
-				<li><a href="#">使用帮助</a></li>
+				<li><a href="{{route('frontend.index')}}">首页</a></li>
+				<li><a href="">预约情况</a></li>
+				<li><a href="">使用帮助</a></li>
+				<!--
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 						其他问题 <b class="caret"></b>
@@ -41,6 +43,7 @@
 						<li><a href="#">其他链接</a></li>
 					</ul>
 				</li>
+				-->
 			</ul>
 		</div>
 	</div>

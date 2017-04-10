@@ -12,7 +12,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-10 col-sm-offset-1">
-				{{--进度条--}}
+			{{--进度条--}}
+			<!--
 				<div class="progress progress-striped active">
 					<div class="progress-bar progress-bar-danger" role="progressbar"
 					     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
@@ -35,12 +36,14 @@
 						<span class="sr-only">100% 完成</span>
 					</div>
 				</div>
+				-->
 				{{--/进度条--}}
 			</div>
 		</div>
 		<div class="row" id="tab_block">
 			<div class="col-sm-10 col-sm-offset-1">
-				<form id="main_form" method="post" action="{{route('frontend.json.apply')}}" class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+				<form id="main_form" method="post" action="{{route('frontend.json.apply')}}" class="layui-tab layui-tab-brief"
+				      lay-filter="docDemoTabBrief">
 					{{csrf_field()}}
 					<ul class="layui-tab-title">
 						<li id="tab_1" class="layui-this">选择时间</li>
@@ -170,7 +173,8 @@
 										<label for="meeting_description" class="control-label">会议概要(可留空)</label>
 										<div class="input-group">
 											<i class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></i>
-											<textarea id="meeting_description" name="meeting_description" rows="3" class="form-control"></textarea>
+											<textarea id="meeting_description" name="meeting_description" rows="3"
+											          class="form-control"></textarea>
 										</div>
 									</div>
 								</div>

@@ -34,6 +34,8 @@ Route::group(['as' => 'frontend.'], function () {
 	Route::group(['prefix' => 'json', 'as' => 'json.'], function () {
 		// 获取符合条件的会议室列表
 		Route::post('rooms', 'RoomController@getRoomList')->name('rooms');
+		// 提交表单提交申请
+		Route::post('apply', 'ApplyController@apply')->name('apply');
 	});
 	
 });

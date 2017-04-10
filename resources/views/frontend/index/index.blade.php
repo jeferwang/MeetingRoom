@@ -40,7 +40,8 @@
 		</div>
 		<div class="row" id="tab_block">
 			<div class="col-sm-10 col-sm-offset-1">
-				<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+				<form id="main_form" method="post" action="{{route('frontend.json.apply')}}" class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+					{{csrf_field()}}
 					<ul class="layui-tab-title">
 						<li id="tab_1" class="layui-this">选择时间</li>
 						<li id="tab_2">会议地点</li>
@@ -57,9 +58,9 @@
 										<label for="start_time" class="control-label">开始时间</label>
 										<div class="input-group">
 											<i class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></i>
-											<input type="text" class="form-control" id="start_time"
+											<input type="text" class="form-control" id="start_time" name="start_time"
 											       data-date-format="yyyy-mm-dd hh:ii:00" readonly>
-											<span class="input-group-addon">S</span>
+											<span class="input-group-addon">Start</span>
 										</div>
 									</div>
 								</div>
@@ -68,18 +69,18 @@
 										<label for="end_time" class="control-label">结束时间</label>
 										<div class="input-group">
 											<i class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></i>
-											<input type="text" class="form-control" id="end_time"
+											<input type="text" class="form-control" id="end_time" name="end_time"
 											       data-date-format="yyyy-mm-dd hh:ii:00" readonly>
-											<span class="input-group-addon">E</span>
+											<span class="input-group-addon">End</span>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="row foot_btn">
 								<div class="col-sm-2 col-sm-push-10 next_block">
-									<button class="btn btn-success" id="next_1">
+									<a href="javascript:void(0)" class="btn btn-success" id="next_1">
 										下一步 <i class="glyphicon glyphicon-chevron-right"></i>
-									</button>
+									</a>
 								</div>
 							</div>
 						</div>
@@ -87,23 +88,30 @@
 						<div class="layui-tab-item" id="content_2">
 							<div class="layui-tab-item layui-show panel panel-default">
 								<p id="description_1" class="panel-heading">
-									请您选择需要预约的会议室(灰色为当前时间段已被 <i>预约成功</i> 的)
+									请您选择需要预约的会议室
 								</p>
 								<div class="row panel-body time_block">
 									<ul class="list-group">
-										<li class="list-group-item" v-for="room in rooms">@{{room.name}}</li>
+										<li class="list-group-item" v-for="room in rooms">
+											<label>
+												<input type="radio" name="room_id" :value="room.id" v-if="room.usable">
+												<input type="radio" name="room_id" :value="room.id" disabled v-if="!room.usable">
+												<span>@{{ room.name }}</span>
+												<span v-if="!room.usable">(已被预约)</span>
+											</label>
+										</li>
 									</ul>
 								</div>
 								<div class="row foot_btn">
 									<div class="col-sm-2 preview_block">
-										<button class="btn btn-info" id="preview_2">
+										<a href="javascript:void(0)" class="btn btn-info" id="preview_2">
 											<i class="glyphicon glyphicon-chevron-left"></i> 上一步
-										</button>
+										</a>
 									</div>
 									<div class="col-sm-2 col-sm-push-8 next_block">
-										<button class="btn btn-success" id="next_2">
+										<a href="javascript:void(0)" class="btn btn-success" id="next_2">
 											下一步 <i class="glyphicon glyphicon-chevron-right"></i>
-										</button>
+										</a>
 									</div>
 								</div>
 							</div>
@@ -119,27 +127,27 @@
 										<label for="people_name" class="control-label">预约者姓名</label>
 										<div class="input-group">
 											<i class="input-group-addon"><i class="glyphicon glyphicon-user"></i></i>
-											<input type="text" id="people_name" class="form-control">
+											<input type="text" id="people_name" name="people_name" class="form-control">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="people_tel" class="control-label">联系方式</label>
 										<div class="input-group">
 											<i class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></i>
-											<input type="text" id="people_tel" class="form-control">
+											<input type="text" id="people_tel" name="people_tel" class="form-control">
 										</div>
 									</div>
 								</div>
 								<div class="row foot_btn">
 									<div class="col-sm-2 preview_block">
-										<button class="btn btn-info" id="preview_3">
+										<a href="javascript:void(0)" class="btn btn-info" id="preview_3">
 											<i class="glyphicon glyphicon-chevron-left"></i> 上一步
-										</button>
+										</a>
 									</div>
 									<div class="col-sm-2 col-sm-push-8 next_block">
-										<button class="btn btn-success" id="next_3">
+										<a href="javascript:void(0)" class="btn btn-success" id="next_3">
 											下一步 <i class="glyphicon glyphicon-chevron-right"></i>
-										</button>
+										</a>
 									</div>
 								</div>
 							</div>
@@ -148,32 +156,32 @@
 						<div class="layui-tab-item" id="content_4">
 							<div class="layui-tab-item layui-show panel panel-default">
 								<p id="description_1" class="panel-heading">
-									请填写会议标题和概要(概要可不填)
+									请填写会议标题和概要
 								</p>
 								<div class="row panel-body time_block">
 									<div class="form-group">
 										<label for="meeting_title" class="control-label">会议标题</label>
 										<div class="input-group">
 											<i class="input-group-addon"><i class="glyphicon glyphicon-star"></i></i>
-											<input type="text" id="meeting_title" class="form-control">
+											<input type="text" id="meeting_title" name="meeting_title" class="form-control">
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="meeting_description" class="control-label">会议概要</label>
+										<label for="meeting_description" class="control-label">会议概要(可留空)</label>
 										<div class="input-group">
 											<i class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></i>
-											<textarea id="meeting_description" rows="3" class="form-control"></textarea>
+											<textarea id="meeting_description" name="meeting_description" rows="3" class="form-control"></textarea>
 										</div>
 									</div>
 								</div>
 								<div class="row foot_btn">
 									<div class="col-sm-2 preview_block">
-										<button class="btn btn-info" id="preview_4">
+										<a href="javascript:void(0)" class="btn btn-info" id="preview_4">
 											<i class="glyphicon glyphicon-chevron-left"></i> 上一步
-										</button>
+										</a>
 									</div>
 									<div class="col-sm-2 col-sm-push-8 next_block">
-										<button class="btn btn-success" id="finish">
+										<button type="submit" class="btn btn-success" id="finish">
 											<i class="glyphicon glyphicon-send"></i> 完成
 										</button>
 									</div>
@@ -183,7 +191,7 @@
 						{{--内容结束--}}
 					</div>
 					{{--内容主体结束--}}
-				</div>
+				</form>
 				{{--标签页结束--}}
 			</div>
 		</div>
@@ -191,92 +199,13 @@
 @endsection
 @section('foot')
 	{{--plugins--}}
+	<script src="/assets/jqueryForm/jquery.form.min.js"></script>
 	<script src="/assets/vue/vue.js"></script>
 	<script src="/assets/datetimepicker/bootstrap-datetimepicker.js"></script>
 	<script src="/assets/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
 	{{--/plugins--}}
 	<script>
-		//注意：导航 依赖 element 模块，否则无法进行功能性操作
-		layui.use(['layer', 'element'], function () {
-			var layer   = layui.layer;
-			var element = layui.element();
-			element.on('tab(docDemoTabBrief)', function (data) {
-			});
-		});
-		$().ready(function () {
-			//	日期时间选择器
-			var time_input = $("#start_time , #end_time");
-			time_input.datetimepicker({
-				language: 'zh-CN',
-				weekStart: 1,
-				todayBtn: 1,
-				autoclose: 1,
-				todayHighlight: 1,
-				startView: 2,
-				forceParse: 0,
-				showMeridian: 1
-			});
-			// 前后跳转逻辑
-			$("#next_1").click(function () {
-				$("#tab_2").click();
-			});
-			$("#next_2").click(function () {
-				$("#tab_3").click();
-			});
-			$("#next_3").click(function () {
-				$("#tab_4").click();
-			});
-			$("#preview_2").click(function () {
-				$("#tab_1").click();
-			});
-			$("#preview_3").click(function () {
-				$("#tab_2").click();
-			});
-			$("#preview_4").click(function () {
-				$("#tab_3").click();
-			});
-			$("#tab_2").click(function () {
-				var start_time = document.getElementById('start_time').value;
-				var end_time   = document.getElementById('end_time').value;
-				$.ajax({
-					type: 'POST'
-					, url: roomsUrl
-					, data: {
-						start_time: start_time
-						, end_time: end_time
-						, _token: Laravel.csrfToken
-					}
-					,beforeSend: function () {
-						layer.load(2);
-					}
-					, success: function (data) {
-						if (data.status) {
-							layer.msg(data.msg);
-							VueTabBlock.rooms = data.data;
-						}else{
-							$("#tab_1").click();
-							layer.alert(data.msg,{
-								icon:5
-							});
-						}
-					}
-					, error: function () {
-						layer.alert('网络错误,请刷新重试',{
-							icon:2
-						});
-					}
-					,complete: function () {
-						layer.closeAll('loading');
-					}
-				});
-			});
-		});
-		var roomsUrl    = "{{route('frontend.json.rooms')}}";
-		var VueTabBlock = new Vue({
-			el: '#tab_block'
-			, data: {
-				rooms: []
-			}
-		});
+		var roomsUrl = "{{route('frontend.json.rooms')}}";
 	</script>
+	<script src="/assets/js/frontend/index.js"></script>
 @endsection

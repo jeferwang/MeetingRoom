@@ -15,9 +15,9 @@ class Room extends Model
 	public static function checkRoomUsable($room_id, $start_time, $end_time)
 	{
 		return Apply::where([['room_id', $room_id], ['pass' => 'pass']])->where(function ($query) use ($start_time, $end_time) {
-			$query->where([['start_time', '>=', $start_time], ['start_time', '<=', $end_time]])->orWhere([
-					['start_time', '<=', $start_time,], ['end_time', '>=', $end_time,],
-				])->orWhere([['end_time', '>=', $start_time], ['end_time', '<=', $end_time]]);
+			$query->where([['start_time', '>=', $start_time], ['start_time', '<', $end_time]])->orWhere([
+				['start_time', '<=', $start_time,], ['end_time', '>=', $end_time,],
+			])->orWhere([['end_time', '>', $start_time], ['end_time', '<=', $end_time]]);
 		})->first();
 		
 	}

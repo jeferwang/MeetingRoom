@@ -131,7 +131,12 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 							<div class="divider2"></div>
 							<li class="active">
 								<a href="{{route('admin.index')}}">
-									<i class="fa fa-laptop" aria-hidden="true"></i><span>首页</span>
+									<i class="fa fa-home" aria-hidden="true"></i><span>首页</span>
+								</a>
+							</li>
+							<li>
+								<a href="{{route('admin.apply.index')}}">
+									<i class="fa fa-check-square-o" aria-hidden="true"></i><span>预约审核</span>
 								</a>
 							</li>
 							<li class="nav-parent">

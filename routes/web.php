@@ -24,6 +24,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 			Route::match(['get', 'post'], 'update/{room_id}', 'RoomController@update')->name('update');
 			Route::match(['get', 'post'], 'delete/{room_id}', 'RoomController@delete')->name('delete');
 		});
+		// 预约审核
+		Route::group(['prefix'=>'apply','as'=>'apply.'], function () {
+			Route::get('index','ApplyController@index')->name('index');
+			Route::post('pass','ApplyController@ajaxPass')->name('pass');
+		});
 	});
 });
 

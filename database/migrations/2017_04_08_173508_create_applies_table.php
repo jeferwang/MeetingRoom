@@ -22,7 +22,7 @@ class CreateAppliesTable extends Migration
 			$table->string('people_tel')->comment('联系方式');
 			$table->string('meeting_title')->comment('会议标题');
 			$table->string('meeting_description')->nullable()->comment('会议概要');
-			$table->boolean('pass')->nullable()->comment('是否通过申请');
+			$table->srting('pass')->nullable()->comment('是否通过申请');
 			$table->text('reason')->nullable()->comment('不通过的原因');
 			$table->timestamps();
 		});

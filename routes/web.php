@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::group(['as' => 'frontend.'], function () {
 	// 首页
 	Route::get('', 'Frontend\IndexController@index')->name('index');
+	Route::get('applylist', 'ApplyController@applyList')->name('apply_list');
 	Route::group(['prefix' => 'json', 'as' => 'json.'], function () {
 		// 获取符合条件的会议室列表
 		Route::post('rooms', 'RoomController@getRoomList')->name('rooms');

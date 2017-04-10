@@ -1,3 +1,6 @@
+window.onload= function () {
+	$("#nav_index").addClass('active');
+};
 //注意：导航 依赖 element 模块，否则无法进行功能性操作
 layui.use(['layer', 'element'], function () {
 	var layer   = layui.layer;

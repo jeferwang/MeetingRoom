@@ -42,9 +42,9 @@
 					</td>
 					<td>
 						@if($apply->pass==null)
-							<button class="btn btn-xs btn-success" id="pass_yes" onclick="pass('{{$apply->id}}',true,this)">通过
+							<button class="btn btn-xs btn-success" id="pass_yes" onclick="pass('{{$apply->id}}',true)">通过
 							</button>
-							<button class="btn btn-xs btn-danger" id="pass_no" onclick="pass('{{$apply->id}}',false,this)">未通过
+							<button class="btn btn-xs btn-danger" id="pass_no" onclick="pass('{{$apply->id}}',false)">未通过
 							</button>
 						@endif
 					</td>
@@ -73,16 +73,27 @@
 				, yes: function (i) {
 					layer.close(i);
 					// 发出Ajax
-					ajaxPass($id, $pass);
+					if (!$pass) {
+						layer.prompt({
+							title:'请填写不通过的理由',
+							formType: 2,
+							maxlength: 255
+						}, function (reason,index) {
+							layer.close(index);
+							ajaxPass($id, $pass,reason);
+						});
+					}else{
+						ajaxPass($id, $pass,'');
+					}
 				}
 			});
 		}
 		var passUrl = "{{route('admin.apply.pass')}}";
-		function ajaxPass($apply_id, $pass, ele) {
+		function ajaxPass($apply_id, $pass,$reason) {
 			$.ajax({
 				type: 'POST'
 				, url: passUrl
-				, data: {'apply_id': $apply_id, 'is_pass': $pass, '_token': Laravel.csrfToken}
+				, data: {'apply_id': $apply_id, 'is_pass': $pass, '_token': Laravel.csrfToken,'reason':$reason}
 				, beforeSend: function () {
 					layer.load(2);
 				}
@@ -99,7 +110,6 @@
 							}
 						}
 					});
-					
 				}
 				, error: function () {
 					layer.alert('网络错误,请刷新重试', {

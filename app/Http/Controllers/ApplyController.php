@@ -42,6 +42,9 @@ class ApplyController extends Controller
 			$apply->pass = 'yes';
 		} else if ($is_pass == 'false') {
 			$apply->pass = 'no';
+			if ($request->input('reason') != '') {
+				$apply->reason = $request->input('reason');
+			}
 		} else {
 			$apply->pass = null;
 		}
@@ -66,5 +69,14 @@ class ApplyController extends Controller
 			$this->setResp($validate);
 		}
 		return $this->resp;
+	}
+	
+	/*
+	 * 前台显示当前预约情况
+	 */
+	public function applyList()
+	{
+		$applies = Apply::paginate(15);
+		return view('frontend.apply.applylist', ['applies' => $applies]);
 	}
 }

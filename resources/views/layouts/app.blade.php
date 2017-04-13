@@ -31,7 +31,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li id="nav_index"><a href="{{route('frontend.index')}}">首页</a></li>
 				<li id="nav_apply_list"><a href="{{route('frontend.apply_list')}}">预约情况</a></li>
-				<li id=""><a href="">使用帮助</a></li>
+				<li id="nav_manage"><a href="{{route('frontend.manage')}}" target="_blank">管理规定</a></li>
 				<!--
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -14,12 +14,21 @@ class Room extends Model
 	 */
 	public static function checkRoomUsable($room_id, $start_time, $end_time)
 	{
-		return Apply::where([['room_id', $room_id], ['pass' => 'pass']])->where(function ($query) use ($start_time, $end_time) {
-			$query->where([['start_time', '>=', $start_time], ['start_time', '<', $end_time]])->orWhere([
-				['start_time', '<=', $start_time,], ['end_time', '>=', $end_time,],
-			])->orWhere([['end_time', '>', $start_time], ['end_time', '<=', $end_time]]);
-		})->first();
-		
+		// $res = true;
+		return Apply::where('room_id', $room_id)
+		            ->whereIn('pass', [0,1])
+		            ->where(function ($query) use ($start_time, $end_time) {
+			            $query->where([['start_time', '>=', $start_time], ['start_time', '<', $end_time]])->orWhere([
+				            ['start_time', '<=', $start_time,], ['end_time', '>=', $end_time,],
+			            ])->orWhere([['end_time', '>', $start_time], ['end_time', '<=', $end_time]]);
+		            })->first();
+		// $applies = Apply::where('room_id', $room_id)->where('start_time', '>', time())->where('pass', 'in', [null, 'yes'])->get();
+		// foreach ($applies as $key => $apply) {
+		// 	if (($apply->start_time >= $start_time && $apply->start_time < $end_time) && ($apply->start_time <= $start_time && $apply->end_time >= $end_time) && ($apply->end_time > $start_time && $apply->end_time <= $end_time)) {
+		// 		$res = false;
+		// 	}
+		// }
+		// return $res;
 	}
 	
 	/*

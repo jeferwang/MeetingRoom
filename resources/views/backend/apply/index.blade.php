@@ -32,11 +32,11 @@
 					<td>{{$apply->meeting_title}}</td>
 					<td>{{$apply->meeting_description or '（无）'}}</td>
 					<td>
-						@if($apply->pass=='yes')
+						@if($apply->pass==1)
 							<span class="badge badge-success">通过</span>
-						@elseif($apply->pass=='no')
+						@elseif($apply->pass==2)
 							<span class="badge badge-danger">未通过</span>
-						@else
+						@elseif($apply->pass==0)
 							<span class="badge badge-info">未审核</span>
 						@endif
 					</td>

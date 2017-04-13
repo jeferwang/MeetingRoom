@@ -39,9 +39,9 @@ class ApplyController extends Controller
 		$apply = Apply::find($request->input('apply_id'));
 		$is_pass = $request->input('is_pass');
 		if ($is_pass == 'true') {
-			$apply->pass = 'yes';
+			$apply->pass = 1;
 		} else if ($is_pass == 'false') {
-			$apply->pass = 'no';
+			$apply->pass = 2;
 			if ($request->input('reason') != '') {
 				$apply->reason = $request->input('reason');
 			}

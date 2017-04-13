@@ -25,3 +25,6 @@
 #tab_block .panel-body{
 	/*min-height: 230px;*/
 }
+#gg_block .panel{
+	margin: 60px auto 10px auto;
+}

@@ -25,9 +25,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 			Route::match(['get', 'post'], 'delete/{room_id}', 'RoomController@delete')->name('delete');
 		});
 		// 预约审核
-		Route::group(['prefix'=>'apply','as'=>'apply.'], function () {
-			Route::get('index','ApplyController@index')->name('index');
-			Route::post('pass','ApplyController@ajaxPass')->name('pass');
+		Route::group(['prefix' => 'apply', 'as' => 'apply.'], function () {
+			Route::get('index', 'ApplyController@index')->name('index');
+			Route::post('pass', 'ApplyController@ajaxPass')->name('pass');
+		});
+		// 公告管理
+		Route::group(['prefix' => 'notice', 'as' => 'notice.'], function () {
+			Route::get('index', 'NoticeController@index')->name('index');
+			Route::match(['get','post'],'add', 'NoticeController@noticeAdd')->name('add');
 		});
 	});
 });
@@ -37,6 +42,9 @@ Route::group(['as' => 'frontend.'], function () {
 	// 首页
 	Route::get('', 'Frontend\IndexController@index')->name('index');
 	Route::get('applylist', 'ApplyController@applyList')->name('apply_list');
+	Route::get('manage', function () {
+		return view('frontend.index.manage');
+	})->name('manage');
 	Route::group(['prefix' => 'json', 'as' => 'json.'], function () {
 		// 获取符合条件的会议室列表
 		Route::post('rooms', 'RoomController@getRoomList')->name('rooms');

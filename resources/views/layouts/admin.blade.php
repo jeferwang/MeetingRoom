@@ -8,40 +8,39 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 <head>
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
 	<!-- Basic -->
-	<meta charset="UTF-8"/>
+	<meta charset="UTF-8" />
 	
 	<title>@yield('title')</title>
 	
 	<!-- Mobile Metas -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	
 	<!-- Import google fonts -->
 {{--<link href="http://fonts.useso.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css" />--}}
-
 <!-- Favicon and touch icons -->
-	<link rel="shortcut icon" href="/assets/ico/favicon.ico" type="image/x-icon"/>
-	<link rel="apple-touch-icon" href="/assets/ico/apple-touch-icon.png"/>
-	<link rel="apple-touch-icon" sizes="57x57" href="/assets/ico/apple-touch-icon-57x57.png"/>
-	<link rel="apple-touch-icon" sizes="72x72" href="/assets/ico/apple-touch-icon-72x72.png"/>
-	<link rel="apple-touch-icon" sizes="76x76" href="/assets/ico/apple-touch-icon-76x76.png"/>
-	<link rel="apple-touch-icon" sizes="114x114" href="/assets/ico/apple-touch-icon-114x114.png"/>
-	<link rel="apple-touch-icon" sizes="120x120" href="/assets/ico/apple-touch-icon-120x120.png"/>
-	<link rel="apple-touch-icon" sizes="144x144" href="/assets/ico/apple-touch-icon-144x144.png"/>
-	<link rel="apple-touch-icon" sizes="152x152" href="/assets/ico/apple-touch-icon-152x152.png"/>
+	<link rel="shortcut icon" href="/assets/ico/favicon.ico" type="image/x-icon" />
+	<link rel="apple-touch-icon" href="/assets/ico/apple-touch-icon.png" />
+	<link rel="apple-touch-icon" sizes="57x57" href="/assets/ico/apple-touch-icon-57x57.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/ico/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="/assets/ico/apple-touch-icon-76x76.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/ico/apple-touch-icon-114x114.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="/assets/ico/apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="/assets/ico/apple-touch-icon-144x144.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="/assets/ico/apple-touch-icon-152x152.png" />
 	
 	<!-- start: CSS file-->
 	
 	<!-- Vendor CSS-->
-	<link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-	<link href="/assets/vendor/skycons/css/skycons.css" rel="stylesheet"/>
-	<link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet"/>
+	<link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/assets/vendor/skycons/css/skycons.css" rel="stylesheet" />
+	<link href="/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 	
 	<!-- Theme CSS -->
-	<link href="/assets/css/jquery.mmenu.css" rel="stylesheet"/>
+	<link href="/assets/css/jquery.mmenu.css" rel="stylesheet" />
 	<link rel="stylesheet" href="/assets/layui/css/layui.css">
 	<!-- Page CSS -->
-	<link href="/assets/css/style.css" rel="stylesheet"/>
-	<link href="/assets/css/add-ons.min.css" rel="stylesheet"/>
+	<link href="/assets/css/style.css" rel="stylesheet" />
+	<link href="/assets/css/add-ons.min.css" rel="stylesheet" />
 	
 	<!-- end: CSS file-->
 	
@@ -69,8 +68,11 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 	<div class="container-fluid container-nav">
 		<!-- Navbar Action -->
 		<ul class="nav navbar-nav navbar-actions navbar-left">
-			<li class="visible-md visible-lg"><a href="javascript:void(0)" id="main-menu-toggle"><i class="fa fa-th-large"></i></a></li>
-			<li class="visible-xs visible-sm"><a href="javascript:void(0)" id="sidebar-menu"><i class="fa fa-navicon"></i></a></li>
+			<li class="visible-md visible-lg"><a href="javascript:void(0)" id="main-menu-toggle"><i
+						class="fa fa-th-large"></i></a></li>
+			<li class="visible-xs visible-sm"><a href="javascript:void(0)" id="sidebar-menu"><i
+						class="fa fa-navicon"></i></a>
+			</li>
 		</ul>
 		<!-- Navbar Right -->
 		<div class="navbar-right">
@@ -86,7 +88,8 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 					<ul class="list-unstyled">
 						<li class="dropdown-menu-header bk-bg-white bk-margin-top-15">
 							<div class="progress progress-xs  progress-striped active">
-								<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+								<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60"
+								     aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
 									100%
 								</div>
 							</div>
@@ -113,7 +116,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 			<div class="sidebar-collapse">
 				<!-- Sidebar Header Logo-->
 				<div class="sidebar-header">
-					<img src="/assets/img/logo.png" class="img-responsive" alt=""/>
+					<img src="/assets/img/logo.png" class="img-responsive" alt="" />
 				</div>
 				<!-- Sidebar Menu-->
 				<div class="sidebar-menu">
@@ -121,7 +124,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 						<ul class="nav nav-sidebar">
 							<div class="panel-body text-center">
 								<div class="bk-avatar">
-									<img src="/assets/img/avatar.jpg" class="img-circle bk-img-60" alt=""/>
+									<img src="/assets/img/avatar.jpg" class="img-circle bk-img-60" alt="" />
 								</div>
 								<div class="bk-padding-top-10">
 									<i class="fa fa-circle text-success"></i>
@@ -144,7 +147,9 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 									<i class="fa fa-user" aria-hidden="true"></i><span>管理员设置</span>
 								</a>
 								<ul class="nav nav-children">
-									<li><a href="{{route('admin.account.change_info')}}"><span class="text"> 修改用户名&密码</span></a></li>
+									<li><a href="{{route('admin.account.change_info')}}"><span
+												class="text"> 修改用户名&密码</span></a>
+									</li>
 								</ul>
 							</li>
 							<li class="nav-parent">
@@ -152,25 +157,26 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 									<i class="fa fa-university" aria-hidden="true"></i><span>活动室管理</span>
 								</a>
 								<ul class="nav nav-children">
-									<li><a href="{{route('admin.room.index')}}"><span class="text"> 查看活动室列表</span></a></li>
+									<li><a href="{{route('admin.room.index')}}"><span class="text"> 查看活动室列表</span></a>
+									</li>
 									<li><a href="{{route('admin.room.add')}}"><span class="text"> 添加活动室</span></a></li>
 								</ul>
 							</li>
-							{{--<li class="nav-parent">--}}
-							{{--<a>--}}
-							{{--<i class="fa fa-clock-o" aria-hidden="true"></i><span>时间段管理</span>--}}
-							{{--</a>--}}
-							{{--<ul class="nav nav-children">--}}
-							{{--<li><a href="javascript:void(0)"><span class="text"> 当前所有时间段</span></a></li>--}}
-							{{--<li><a href="javascript:void(0)"><span class="text"> 新增时间段</span></a></li>--}}
-							{{--</ul>--}}
-							{{--</li>--}}
+							<li class="nav-parent">
+								<a>
+									<i class="fa fa-clock-o" aria-hidden="true"></i><span>公告管理</span>
+								</a>
+								<ul class="nav nav-children">
+									<li><a href="{{route('admin.notice.index')}}"><span class="text"> 公告列表</span></a>
+									</li>
+									<li><a href="{{route('admin.notice.add')}}"><span class="text"> 新增公告</span></a></li>
+								</ul>
+							</li>
 							<li class="nav-parent">
 								<a>
 									<i class="fa fa-cog" aria-hidden="true"></i><span>其他内容管理</span>
 								</a>
 								<ul class="nav nav-children">
-									<li><a href="javascript:void(0)"><span class="text"> 公告</span></a></li>
 									<li><a href="javascript:void(0)"><span class="text"> 预约须知</span></a></li>
 									<li><a href="javascript:void(0)"><span class="text"> 管理办法</span></a></li>
 								</ul>
@@ -189,7 +195,9 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 					<li><a href="javascript:void(0)">About</a></li>
 				</ul>
 				<div class="copyright text-center">
-					<span>Copyright &copy; <?php $year = date('Y', time()); ?><?= ($year == 2017) ? '' : '2017-' ?><?= $year ?> <strong><a target="_blank" href="http://www.xsgzs.org/">Xingsi Studio.</a></strong></span>
+					<span>Copyright &copy; <?php $year = date('Y', time()); ?><?= ($year == 2017) ? ''
+							: '2017-' ?><?= $year ?>
+						<strong><a target="_blank" href="http://www.xsgzs.org/">Xingsi Studio.</a></strong></span>
 					<span>All rights reserved.</span>
 				</div>
 			</div>

@@ -11,37 +11,14 @@
 @section('content')
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-10 col-sm-offset-1">
-			{{--进度条--}}
-			<!--
-				<div class="progress progress-striped active">
-					<div class="progress-bar progress-bar-danger" role="progressbar"
-					     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-					     style="width: 25%;">
-						<span class="sr-only">25% 完成（警告）</span>
-					</div>
-					<div class="progress-bar progress-bar-warning" role="progressbar"
-					     aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
-					     style="width: 25%;">
-						<span class="sr-only">50% 完成（信息）</span>
-					</div>
-					<div class="progress-bar progress-bar-info" role="progressbar"
-					     aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"
-					     style="width: 25%;">
-						<span class="sr-only">75% 完成</span>
-					</div>
-					<div class="progress-bar progress-bar-success" role="progressbar"
-					     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
-					     style="width: 25%;">
-						<span class="sr-only">100% 完成</span>
-					</div>
+			<div class="col-sm-12">
+				<div class="alert alert-success">
+					666
 				</div>
-				-->
-				{{--/进度条--}}
 			</div>
 		</div>
 		<div class="row" id="tab_block">
-			<div class="col-sm-10 col-sm-offset-1">
+			<div class="col-sm-12">
 				<form id="main_form" method="post" action="{{route('frontend.json.apply')}}" class="layui-tab layui-tab-brief"
 				      lay-filter="docDemoTabBrief">
 					{{csrf_field()}}

@@ -41,7 +41,8 @@
 		 * 修改一篇公告
 		 * $nid Notice ID
 		 */
-		function updateN($nid, ele) {
+		function updateN($nid) {
+			location.href = "{{route('admin.notice.update')}}?nid=" + $nid;
 		}
 		/*
 		 * 删除一篇公告

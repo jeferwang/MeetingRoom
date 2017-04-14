@@ -20,25 +20,37 @@
 			<form action="" method="post">
 				<div class="form-group">
 					<label for="title" class="control-label">公告标题</label>
-					<input type="text" name="title" id="title" class="form-control">
+					<input type="text" name="title" id="title" class="form-control" value="{{$notice->title or ''}}">
 				</div>
 				<div class="row layui-form">
 					<div class="col-sm-4">
-						<div class="alert alert-info"><input type="radio" name="theme" title="提示" checked value="info"></div>
+						<div class="alert alert-info">
+							<input type="radio" name="theme" title="提示" value="info"
+							       @if(!isset($notice) || $notice->theme=='info') checked @endif>
+						</div>
 					</div>
 					<div class="col-sm-4">
-						<div class="alert alert-warning"><input type="radio" name="theme" title="警告" value="warning"></div>
+						<div class="alert alert-warning">
+							<input type="radio" name="theme" title="警告" value="warning"
+							       @if($notice->theme=='warning') checked @endif>
+						</div>
 					</div>
 					<div class="col-sm-4">
-						<div class="alert alert-danger"><input type="radio" name="theme" title="危险" value="danger"></div>
+						<div class="alert alert-danger"><input type="radio" name="theme" title="危险" value="danger"
+						                                       @if($notice->theme=='danger') checked @endif>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="" class="control-label">内容</label>
-					<script id="content" type="text/plain"></script>
+					<script id="content" type="text/plain">{!! $notice->content or ''!!}</script>
 				</div>
 				<div class="form-group">
-					<input type="button" class="btn btn-success" value="添加公告" id="addNotice">
+					@if($notice)
+						<input type="button" class="btn btn-primary" value="更新公告" id="addNotice">
+					@else
+						<input type="button" class="btn btn-success" value="添加公告" id="addNotice">
+					@endif
 				</div>
 			</form>
 		</div>
@@ -70,31 +82,35 @@
 			}
 		}
 		// 执行提交并发出Ajax
+		url = "{{isset($notice)?route('admin.notice.update'):route('admin.notice.add')}}";
 		$('#addNotice').on('click', function (e) {
 			e.target.disabled = true;
 			var data          = getData();
-			var check=checkData(data);
+			var check         = checkData(data);
+			@if(isset($notice))
+				data.nid      = "{{$notice->id}}";
+			@endif
 			if (!check.status) {
-				layer.msg(check.msg,{
-					icon:5
+				layer.msg(check.msg, {
+					icon: 5
 				});
 				e.target.disabled = false;
 			} else {  // 数据验证成功
 				data._token = Laravel.csrfToken;
 				$.ajax({
-					type: 'POST'
-					, url: "{{route('admin.notice.add')}}"
-					, data: data
+					type        : 'POST'
+					, url       : url
+					, data      : data
 					, beforeSend: function () {
 						layer.load(2);
 					}
-					, success: function (res) {
+					, success   : function (res) {
 						if (res.status) {
 							layer.alert(res.msg, {
-								icon: 6
+								icon      : 6
 								, closeBtn: 0
-								, btn: ['转到列表', '留在本页']
-								, yes: function () {
+								, btn     : ['转到列表', '留在本页']
+								, yes     : function () {
 									location.href = "{{route('admin.notice.index')}}"
 								}
 							})
@@ -104,12 +120,12 @@
 							});
 						}
 					}
-					, error: function () {
+					, error     : function () {
 						layer.alert('网络错误或服务错误,请稍后重试', {
 							icon: 2
 						});
 					}
-					, complete: function () {
+					, complete  : function () {
 						layer.closeAll('loading');
 					}
 				});

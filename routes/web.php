@@ -34,7 +34,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 			Route::get('index', 'NoticeController@index')->name('index');
 			Route::match(['get', 'post'], 'add', 'NoticeController@noticeAdd')->name('add');
 			Route::post('del', 'NoticeController@noticeDel')->name('del');
-			Route::get('update', 'NoticeController@noticeUpdate')->name('update');
+			Route::match(['get','post'],'update', 'NoticeController@noticeUpdate')->name('update');
 		});
 	});
 });

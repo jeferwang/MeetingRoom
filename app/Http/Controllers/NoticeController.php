@@ -1,9 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
+use function abort;
 use App\Notice;
+use const false;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use function view;
 
 class NoticeController extends Controller
 {
@@ -63,8 +67,50 @@ class NoticeController extends Controller
 	/*
 	 * 更新公告
 	 */
-	public function noticeUpdate()
+	public function noticeUpdate(Request $request)
 	{
+		$nid = $request->input('nid');
+		if (!$nid) {
+			abort(403, 'Missing Parameter');
+		}
+		$notice = Notice::findOrFail($nid);
+		// POST请求执行添加
+		if ($request->isMethod('post')) {
+			// 验证规则
+			$validateRule = [
+				'nid'     => 'required|Numeric',
+				'title'   => 'required|max:50',
+				'theme'   => 'required',
+				'content' => 'required',
+			];
+			$errorMsg = [
+				'nid.required'     => '参数缺失',
+				'nid.Numeric'      => '参数格式不正确',
+				'title.required'   => '标题不能为空',
+				'title.max'        => '标题不能超过50个字符',
+				'theme.required'   => '主题颜色不能为空',
+				'content.required' => '内容不能为空',
+			];
+			// 执行验证
+			$validator = Validator::make($request->all(), $validateRule, $errorMsg);
+			// 是否通过验证
+			if ($validator->fails()) {
+				$this->setResp(['status' => false, 'msg' => $validator->errors()->first()]);
+			} else {
+				$notice->fill($request->all());
+				$save = $notice->save();
+				if ($save) {
+					$this->setResp(['status' => true, 'msg' => '保存成功']);
+				} else {
+					$this->setResp(['status' => false, 'msg' => '保存失败']);
+				}
+			}
+			
+			// 返回Ajax结果
+			return $this->resp;
+		}
+		
+		return view('backend.notice.add', ['notice'=>$notice]);
 	}
 	
 	/*

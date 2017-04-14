@@ -20,30 +20,34 @@
 			<form action="" method="post">
 				<div class="form-group">
 					<label for="title" class="control-label">公告标题</label>
-					<input type="text" name="title" id="title" class="form-control">
+					<input type="text" name="title" id="title" class="form-control"
+					       value="{{$notice->title}}">
 				</div>
 				<div class="row layui-form">
 					<div class="col-sm-4">
 						<div class="alert alert-info">
-							<input type="radio" name="theme" title="提示" value="info" checked>
+							<input type="radio" name="theme" title="提示" value="info"
+							       @if($notice->theme=='info') checked @endif>
 						</div>
 					</div>
 					<div class="col-sm-4">
 						<div class="alert alert-warning">
-							<input type="radio" name="theme" title="警告" value="warning" >
+							<input type="radio" name="theme" title="警告" value="warning"
+							       @if($notice->theme=='warning') checked @endif>
 						</div>
 					</div>
 					<div class="col-sm-4">
-						<div class="alert alert-danger"><input type="radio" name="theme" title="危险" value="danger" >
+						<div class="alert alert-danger"><input type="radio" name="theme" title="危险" value="danger"
+						                                       @if($notice->theme=='danger') checked @endif>
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="" class="control-label">内容</label>
-					<script id="content" type="text/plain"></script>
+					<script id="content" type="text/plain">{!! $notice->content or ''!!}</script>
 				</div>
 				<div class="form-group">
-						<input type="button" class="btn btn-success" value="添加公告" id="addNotice">
+					<input type="button" class="btn btn-primary" value="更新公告" id="addNotice">
 				</div>
 			</form>
 		</div>
@@ -80,6 +84,7 @@
 			e.target.disabled = true;
 			var data          = getData();
 			var check         = checkData(data);
+			data.nid          = "{{$notice->id}}";
 			if (!check.status) {
 				layer.msg(check.msg, {
 					icon: 5

@@ -110,7 +110,7 @@ class NoticeController extends Controller
 			return $this->resp;
 		}
 		
-		return view('backend.notice.add', ['notice'=>$notice]);
+		return view('backend.notice.update', ['notice'=>$notice]);
 	}
 	
 	/*

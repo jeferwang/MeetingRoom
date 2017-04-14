@@ -32,11 +32,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 		// 公告管理
 		Route::group(['prefix' => 'notice', 'as' => 'notice.'], function () {
 			Route::get('index', 'NoticeController@index')->name('index');
-			Route::match(['get','post'],'add', 'NoticeController@noticeAdd')->name('add');
+			Route::match(['get', 'post'], 'add', 'NoticeController@noticeAdd')->name('add');
+			Route::post('del', 'NoticeController@noticeDel')->name('del');
+			Route::get('update', 'NoticeController@noticeUpdate')->name('update');
 		});
 	});
 });
-
 // 前端
 Route::group(['as' => 'frontend.'], function () {
 	// 首页
@@ -51,5 +52,4 @@ Route::group(['as' => 'frontend.'], function () {
 		// 提交表单提交申请
 		Route::post('apply', 'ApplyController@apply')->name('apply');
 	});
-	
 });

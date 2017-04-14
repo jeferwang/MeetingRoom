@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Notice;
@@ -15,42 +14,79 @@ class NoticeController extends Controller
 	 */
 	public function index()
 	{
+		// 分页取出结果
 		$notices = Notice::paginate(10);
+		// theme映射
 		$themeMap = ['info' => '提示', 'warning' => '警告', 'danger' => '严重'];
+		
+		// 渲染页面
 		return view('backend.notice.index', ['notices' => $notices, 'themeMap' => $themeMap]);
 	}
 	
+	/*
+	 * 添加新的公告
+	 */
 	public function noticeAdd(Request $request)
 	{
+		// POST请求执行添加
 		if ($request->isMethod('post')) {
-			$validator = Validator::make($request->all(), [
+			// 验证规则
+			$validateRule = [
 				'title'   => 'required|max:50',
 				'theme'   => 'required',
 				'content' => 'required',
-			], [
+			];
+			$errorMsg = [
 				'title.required'   => '标题不能为空',
 				'title.max'        => '标题不能超过50个字符',
 				'theme.required'   => '主题颜色不能为空',
 				'content.required' => '内容不能为空',
-			]);
+			];
+			// 执行验证
+			$validator = Validator::make($request->all(), $validateRule, $errorMsg);
+			// 是否通过验证
 			if ($validator->fails()) {
 				$this->setResp(['status' => false, 'msg' => $validator->errors()->first()]);
 			} else {
 				Notice::create($request->all());
 				$this->setResp(['status' => true, 'msg' => '添加公告成功']);
 			}
+			
+			// 返回Ajax结果
 			return $this->resp;
 		}
+		
+		// GET请求得到页面
 		return view('backend.notice.add');
 	}
 	
-	public function noticeEdit()
+	/*
+	 * 更新公告
+	 */
+	public function noticeUpdate()
 	{
-	
 	}
 	
-	public function noticeDel()
+	/*
+	 * 删除一篇公告(Ajax)
+	 */
+	public function noticeDel(Request $request)
 	{
-	
+		// 取出参数
+		$nid = $request->input('nid', null);
+		if (!$nid) {
+			$this->setResp(['status' => false, 'msg' => '缺少参数nid']);
+		}
+		// 执行删除
+		$del = Notice::where('id', $nid)->delete();
+		// 检查是否删除成功
+		if ($del) {
+			$this->setResp(['status' => true, 'msg' => '删除成功']);
+		} else {
+			$this->setResp(['status' => false, 'msg' => '删除错误,请刷新重试']);
+		}
+		
+		// 返回Ajax结果
+		return $this->resp;
 	}
 }

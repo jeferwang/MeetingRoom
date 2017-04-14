@@ -1,4 +1,4 @@
-window.onload= function () {
+window.onload = function () {
 	$("#nav_index").addClass('active');
 };
 //注意：导航 依赖 element 模块，否则无法进行功能性操作
@@ -10,14 +10,14 @@ $().ready(function () {
 	//	日期时间选择器
 	var time_input = $("#start_time , #end_time");
 	time_input.datetimepicker({
-		language: 'zh-CN',
-		weekStart: 1,
-		todayBtn: 1,
-		autoclose: 1,
+		language      : 'zh-CN',
+		weekStart     : 1,
+		todayBtn      : 1,
+		autoclose     : 1,
 		todayHighlight: 1,
-		startView: 2,
-		forceParse: 0,
-		showMeridian: 1
+		startView     : 2,
+		forceParse    : 0,
+		showMeridian  : 1
 	});
 	// 前后跳转逻辑
 	$("#next_1").click(function () {
@@ -42,17 +42,17 @@ $().ready(function () {
 		var start_time = document.getElementById('start_time').value;
 		var end_time   = document.getElementById('end_time').value;
 		$.ajax({
-			type: 'POST'
-			, url: roomsUrl
-			, data: {
+			type        : 'POST'
+			, url       : roomsUrl
+			, data      : {
 				start_time: start_time
 				, end_time: end_time
-				, _token: Laravel.csrfToken
+				, _token  : Laravel.csrfToken
 			}
 			, beforeSend: function () {
 				layer.load(2);
 			}
-			, success: function (data) {
+			, success   : function (data) {
 				if (data.status) {
 					layer.msg(data.msg);
 					VueTabBlock.rooms = data.data;
@@ -63,19 +63,19 @@ $().ready(function () {
 					});
 				}
 			}
-			, error: function () {
+			, error     : function () {
 				layer.alert('网络错误,请刷新重试', {
 					icon: 2
 				});
 			}
-			, complete: function () {
+			, complete  : function () {
 				layer.closeAll('loading');
 			}
 		});
 	});
 });
 var VueTabBlock = new Vue({
-	el: '#tab_block'
+	el    : '#tab_block'
 	, data: {
 		rooms: []
 	}
@@ -89,15 +89,15 @@ $("#main_form").on('submit', function (e) {
 		beforeSubmit: function () {
 			layer.load(2);
 		}
-		, success: function (data) {
+		, success   : function (data) {
 			if (data.status) {
 				layer.alert(data.msg, {
-					icon: 6
-					,closeBtn:0
-					,btn:['确定']
-					,yes: function (i) {
+					icon      : 6
+					, closeBtn: 0
+					, btn     : ['确定']
+					, yes     : function (i) {
 						layer.close(i);
-						location.href='/';
+						location.href = '/';
 					}
 				});
 			} else {
@@ -106,13 +106,31 @@ $("#main_form").on('submit', function (e) {
 				});
 			}
 		}
-		, error: function () {
+		, error     : function () {
 			layer.alert('网络错误,请刷新重试', {
 				icon: 2
 			});
 		}
-		, complete: function () {
+		, complete  : function () {
 			layer.closeAll('loading');
 		}
 	});
 });
+/*
+ 弹窗显示公告
+ */
+function showNotice($nid, ele) {
+	//多窗口模式，层叠置顶
+	layer.open({
+		type     : 2 // iFrame
+		, title  : $(ele).find('span:first').text()
+		, area   : ['800px', '600px']
+		, shade  : 0
+		, maxmin : true
+		, content: showNoticeUrl + $nid
+		, btn    : ['关闭']
+		, yes    : function () {
+			layer.closeAll();
+		}
+	});
+}

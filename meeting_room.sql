@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
+Source Server         : 127.0.0.1
 Source Server Version : 50714
 Source Host           : 127.0.0.1:3306
 Source Database       : meeting_room
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50714
 File Encoding         : 65001
 
-Date: 2017-04-10 16:10:58
+Date: 2017-04-14 16:11:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -70,7 +70,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of migrations
@@ -78,6 +78,28 @@ CREATE TABLE `migrations` (
 INSERT INTO `migrations` VALUES ('1', '2017_04_05_102332_create_admins_table', '1');
 INSERT INTO `migrations` VALUES ('4', '2017_04_06_140657_create_rooms_table', '2');
 INSERT INTO `migrations` VALUES ('6', '2017_04_08_173508_create_applies_table', '3');
+INSERT INTO `migrations` VALUES ('7', '2017_04_11_154330_create_notices_table', '4');
+
+-- ----------------------------
+-- Table structure for notices
+-- ----------------------------
+DROP TABLE IF EXISTS `notices`;
+CREATE TABLE `notices` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '公告标题',
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '公告内容',
+  `theme` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '公告主题颜色',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of notices
+-- ----------------------------
+INSERT INTO `notices` VALUES ('3', '提示111', '<p>提示111</p>', 'warning', '2017-04-12 16:20:36', '2017-04-14 13:16:27');
+INSERT INTO `notices` VALUES ('4', '提示222', '<p>提示222</p>', 'info', '2017-04-12 16:20:44', '2017-04-14 13:17:19');
+INSERT INTO `notices` VALUES ('5', '最新的公告', '<p>来来来,发一篇最新的公告</p>', 'danger', '2017-04-12 16:20:47', '2017-04-14 16:03:29');
 
 -- ----------------------------
 -- Table structure for rooms

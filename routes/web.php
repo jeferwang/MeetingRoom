@@ -34,7 +34,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 			Route::get('index', 'NoticeController@index')->name('index');
 			Route::match(['get', 'post'], 'add', 'NoticeController@noticeAdd')->name('add');
 			Route::post('del', 'NoticeController@noticeDel')->name('del');
-			Route::match(['get','post'],'update', 'NoticeController@noticeUpdate')->name('update');
+			Route::match(['get', 'post'], 'update', 'NoticeController@noticeUpdate')->name('update');
 		});
 	});
 });
@@ -42,10 +42,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 Route::group(['as' => 'frontend.'], function () {
 	// 首页
 	Route::get('', 'Frontend\IndexController@index')->name('index');
+	// 预约列表
 	Route::get('applylist', 'ApplyController@applyList')->name('apply_list');
+	// 管理办法
 	Route::get('manage', function () {
 		return view('frontend.index.manage');
 	})->name('manage');
+	// 公告列表
+	Route::get('noticelist', 'NoticeController@noticeList')->name('notice_list');
+	Route::get('shownotice', 'NoticeController@showNotice')->name('show_notice');
+	// 前端js接口
 	Route::group(['prefix' => 'json', 'as' => 'json.'], function () {
 		// 获取符合条件的会议室列表
 		Route::post('rooms', 'RoomController@getRoomList')->name('rooms');

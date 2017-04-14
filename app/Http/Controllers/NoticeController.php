@@ -6,7 +6,6 @@ use App\Notice;
 use const false;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use function view;
 
 class NoticeController extends Controller
@@ -110,7 +109,7 @@ class NoticeController extends Controller
 			return $this->resp;
 		}
 		
-		return view('backend.notice.update', ['notice'=>$notice]);
+		return view('backend.notice.update', ['notice' => $notice]);
 	}
 	
 	/*
@@ -134,5 +133,23 @@ class NoticeController extends Controller
 		
 		// 返回Ajax结果
 		return $this->resp;
+	}
+	/*
+	 * 前端显示所有公告的列表
+	 */
+	public function noticeList()
+	{
+		$nList=Notice::latest()->paginate(10);
+		return view('frontend.notice.list',['nList'=>$nList]);
+	}
+	
+	public function showNotice(Request $request)
+	{
+		$nid=$request->input('nid');
+		if(!$nid){
+		    abort('403','缺少参数');
+		}
+		$notice=Notice::findOrFail($nid);
+		return view('frontend.notice.show',['notice'=>$notice]);
 	}
 }

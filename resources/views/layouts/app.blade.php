@@ -30,6 +30,7 @@
 		<div class="collapse navbar-collapse" id="example-navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<li id="nav_index"><a href="{{route('frontend.index')}}">首页</a></li>
+				<li id="nav_notice_list"><a href="{{route('frontend.notice_list')}}">公告列表</a></li>
 				<li id="nav_apply_list"><a href="{{route('frontend.apply_list')}}">预约情况</a></li>
 				<li id="nav_manage"><a href="{{route('frontend.manage')}}" target="_blank">管理规定</a></li>
 				<!--

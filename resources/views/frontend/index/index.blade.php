@@ -10,17 +10,21 @@
 @endsection
 @section('content')
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="alert alert-success">
-					666
+		@if($noticeOne)
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="alert alert-{{$noticeOne->theme}}" onclick="showNotice('{{$noticeOne->id}}',this)" style="cursor: pointer;">
+						<span>{{$noticeOne->title}}</span>
+						<span class="pull-right">{{$noticeOne->created_at}}</span>
+					</div>
 				</div>
 			</div>
-		</div>
+		@endif
 		<div class="row" id="tab_block">
 			<div class="col-sm-12">
-				<form id="main_form" method="post" action="{{route('frontend.json.apply')}}" class="layui-tab layui-tab-brief"
-				      lay-filter="docDemoTabBrief">
+				<form id="main_form" method="post" action="{{route('frontend.json.apply')}}"
+				      class="layui-tab layui-tab-brief"
+				      lay-filter="mainTab">
 					{{csrf_field()}}
 					<ul class="layui-tab-title">
 						<li id="tab_1" class="layui-this">选择时间</li>
@@ -37,7 +41,8 @@
 									<div class="form-group">
 										<label for="start_time" class="control-label">开始时间</label>
 										<div class="input-group">
-											<i class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></i>
+											<i class="input-group-addon"><i
+													class="glyphicon glyphicon-calendar"></i></i>
 											<input type="text" class="form-control" id="start_time" name="start_time"
 											       data-date-format="yyyy-mm-dd hh:ii:00" readonly>
 											<span class="input-group-addon">Start</span>
@@ -48,7 +53,8 @@
 									<div class="form-group">
 										<label for="end_time" class="control-label">结束时间</label>
 										<div class="input-group">
-											<i class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></i>
+											<i class="input-group-addon"><i
+													class="glyphicon glyphicon-calendar"></i></i>
 											<input type="text" class="form-control" id="end_time" name="end_time"
 											       data-date-format="yyyy-mm-dd hh:ii:00" readonly>
 											<span class="input-group-addon">End</span>
@@ -75,7 +81,8 @@
 										<li class="list-group-item" v-for="room in rooms">
 											<label>
 												<input type="radio" name="room_id" :value="room.id" v-if="room.usable">
-												<input type="radio" name="room_id" :value="room.id" disabled v-if="!room.usable">
+												<input type="radio" name="room_id" :value="room.id" disabled
+												       v-if="!room.usable">
 												<span>@{{ room.name }}</span>
 												<span v-if="!room.usable">(已被预约)</span>
 											</label>
@@ -113,7 +120,8 @@
 									<div class="form-group">
 										<label for="people_tel" class="control-label">联系方式</label>
 										<div class="input-group">
-											<i class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></i>
+											<i class="input-group-addon"><i
+													class="glyphicon glyphicon-earphone"></i></i>
 											<input type="text" id="people_tel" name="people_tel" class="form-control">
 										</div>
 									</div>
@@ -143,13 +151,15 @@
 										<label for="meeting_title" class="control-label">会议标题</label>
 										<div class="input-group">
 											<i class="input-group-addon"><i class="glyphicon glyphicon-star"></i></i>
-											<input type="text" id="meeting_title" name="meeting_title" class="form-control">
+											<input type="text" id="meeting_title" name="meeting_title"
+											       class="form-control">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="meeting_description" class="control-label">会议概要(可留空)</label>
 										<div class="input-group">
-											<i class="input-group-addon"><i class="glyphicon glyphicon-list-alt"></i></i>
+											<i class="input-group-addon"><i
+													class="glyphicon glyphicon-list-alt"></i></i>
 											<textarea id="meeting_description" name="meeting_description" rows="3"
 											          class="form-control"></textarea>
 										</div>
@@ -186,7 +196,8 @@
 	<script src="/assets/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
 	{{--/plugins--}}
 	<script>
-		var roomsUrl = "{{route('frontend.json.rooms')}}";
+		var roomsUrl      = "{{route('frontend.json.rooms')}}";
+		var showNoticeUrl = '{{route('frontend.show_notice')}}?nid=';
 	</script>
 	<script src="/assets/js/frontend/index.js"></script>
 @endsection

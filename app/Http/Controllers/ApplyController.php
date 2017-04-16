@@ -14,7 +14,7 @@ class ApplyController extends Controller
 	 */
 	public function index()
 	{
-		$applies = Apply::paginate(15);
+		$applies = Apply::latest()->paginate(15);
 		return view('backend.apply.index', ['applies' => $applies]);
 	}
 	
@@ -76,7 +76,7 @@ class ApplyController extends Controller
 	 */
 	public function applyList()
 	{
-		$applies = Apply::paginate(15);
+		$applies = Apply::latest()->paginate(15);
 		return view('frontend.apply.applylist', ['applies' => $applies]);
 	}
 }

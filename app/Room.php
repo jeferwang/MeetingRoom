@@ -38,9 +38,11 @@ class Room extends Model
 	{
 		// 验证时间的正确性
 		if ($start_time == 0 || $end_time == 0) {
-			return ['status' => false, 'msg' => '时间格式错误'];
-		} else if ($start_time >= $end_time || $start_time < time()) {
-			return ['status' => false, 'msg' => '时间选择错误'];
+			return ['status' => false, 'msg' => '时间格式输入错误'];
+		} else if ($start_time >= $end_time) {
+			return ['status' => false, 'msg' => '开始时间不能大于结束时间'];
+		}else if($start_time < time()){
+			return ['status' => false, 'msg' => '开始时间不能早于现在'];
 		} else if (($end_time - $start_time) > 86400) {
 			return ['status' => false, 'msg' => '预约会议室时长不能大于24小时'];
 		} else {

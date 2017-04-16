@@ -198,6 +198,7 @@
 	<script>
 		var roomsUrl      = "{{route('frontend.json.rooms')}}";
 		var showNoticeUrl = '{{route('frontend.show_notice')}}?nid=';
+		var successRedirectUrl="{{route('frontend.apply_list')}}"
 	</script>
 	<script src="/assets/js/frontend/index.js"></script>
 @endsection

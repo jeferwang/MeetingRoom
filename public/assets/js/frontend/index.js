@@ -97,7 +97,7 @@ $("#main_form").on('submit', function (e) {
 					, btn     : ['确定']
 					, yes     : function (i) {
 						layer.close(i);
-						location.href = '/';
+						location.href = successRedirectUrl;
 					}
 				});
 			} else {

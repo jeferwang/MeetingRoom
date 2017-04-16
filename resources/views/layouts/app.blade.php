@@ -25,14 +25,14 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">HPU会议室预约系统</a>
+			<a class="navbar-brand" href="/">HPU会议室预约系统</a>
 		</div>
 		<div class="collapse navbar-collapse" id="example-navbar-collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<li id="nav_index"><a href="{{route('frontend.index')}}">首页</a></li>
 				<li id="nav_notice_list"><a href="{{route('frontend.notice_list')}}">公告列表</a></li>
 				<li id="nav_apply_list"><a href="{{route('frontend.apply_list')}}">预约情况</a></li>
-				<li id="nav_manage"><a href="{{route('frontend.manage')}}" target="_blank">管理规定</a></li>
+				<li id="nav_manage"><a href="{{route('frontend.manage')}}" target="_blank">管理办法</a></li>
 				<!--
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">

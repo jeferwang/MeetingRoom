@@ -49,7 +49,28 @@
 		<!--/添加表单-->
 		<!--显示已添加-->
 		<div class="row" id="showTerm">
-		
+			<table class="col-sm-12 table table-bordered table-responsive table-hover">
+				<thead>
+				<tr>
+					<th>学期名称</th>
+					<th>开始日期</th>
+					<th>总周数</th>
+					<th>操作</th>
+				</tr>
+				</thead>
+				<tbody>
+				@foreach($terms as $index =>$term)
+					<tr class="well">
+						<td>{{$term->termName}}</td>
+						<td>{{date('Y-m-d',$term->startTime)}}</td>
+						<td>{{$term->weekCount}}</td>
+						<td>
+							<button class="btn btn-danger btn-xs" onclick="delTerm('{{$term->id}}',this)">删除</button>
+						</td>
+					</tr>
+				@endforeach
+				</tbody>
+			</table>
 		</div>
 		<!--/显示已添加-->
 	</div>
@@ -90,7 +111,12 @@
 				, success   : function (data) {
 					var ico = data.status ? 6 : 5;
 					layer.alert(data.msg, {
-						icon: ico
+						icon      : ico
+						, closeBtn: 0
+						, btn     : ['确定']
+						, yes     : function () {
+							location.reload(true);
+						}
 					});
 				}
 				, error     : function () {
@@ -100,5 +126,39 @@
 				}
 			});
 		});
+		function delTerm($tId, ele) {
+			layer.alert('您确认删除这一条目吗？', {
+				icon      : 5
+				, btn     : ['删除', '取消']
+				, closeBtn: 0
+				, yes     : function () {
+					$.ajax({
+						method      : 'POST'
+						, url       : "{{route('admin.term.del')}}"
+						, data      : {_token: Laravel.csrfToken, tId: $tId}
+						, beforeSend: function () {
+							layer.load(2);
+						}
+						, success   : function (data) {
+							var ico = data.status ? 6 : 5;
+							layer.alert(data.msg, {
+								icon: ico
+							});
+							if (data.status) {
+								$(ele).parent('td').parent('tr').hide(500);
+							}
+						}
+						, error     : function () {
+							layer.alert('网络错误,请刷新重试!', {
+								icon: 2
+							});
+						}
+						, complete  : function () {
+							layer.closeAll('loading');
+						}
+					});
+				}
+			})
+		}
 	</script>
 @endsection

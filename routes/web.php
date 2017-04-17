@@ -47,6 +47,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'],
 				Route::group(['prefix' => 'term', 'as' => 'term.'],
 					function () {
 						Route::match(['get', 'post'], 'index', 'TermController@index')->name('index');
+						Route::post('del','TermController@delTerm')->name('del');
 					});
 			});
 	});

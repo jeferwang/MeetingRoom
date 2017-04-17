@@ -1,11 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use function date;
-use function dump;
+use App\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use function strtotime;
 
 /*
  * 学期控制器
@@ -20,6 +18,7 @@ class TermController extends Controller
 	 */
 	public function index(Request $request)
 	{
+		// Method==POST
 		if ($request->isMethod('post')) {
 			$validator = Validator::make($request->all(),
 				[
@@ -43,11 +42,28 @@ class TermController extends Controller
 				if (date('w', $startTime) != 1) {
 					$this->setResp(['status' => false, 'msg' => '学期开始日期必须是星期一 ! ']);
 				} else {
+					$create = Term::create([
+						'termName'  => $request->input('termName'),
+						'startTime' => $startTime,
+						'weekCount' => $request->input('weekCount'),
+					]);
 					$this->setResp(['status' => true, 'msg' => '添加成功']);
 				}
 			}
 			return $this->resp;
+		}// END Method==POST
+		$terms = Term::all();
+		return view('backend.term.index', ['terms' => $terms]);
+	}
+	
+	public function delTerm(Request $request)
+	{
+		$tId = $request->input('tId', 0);
+		if (!$tId) {
+			$this->setResp(['status' => false, 'msg' => '缺少参数tId']);
 		}
-		return view('backend.term.index');
+		$del = Term::findOrFail($tId)->delete();
+		$this->setResp(['status' => true, 'msg' => '删除成功']);
+		return $this->resp;
 	}
 }

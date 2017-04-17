@@ -177,6 +177,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 									<i class="fa fa-cog" aria-hidden="true"></i><span>其他内容管理</span>
 								</a>
 								<ul class="nav nav-children">
+									<li><a href="{{route('admin.term.index')}}"><span class="text"> 学期/周数管理</span></a></li>
 									<li><a href="javascript:void(0)"><span class="text"> 预约须知</span></a></li>
 									<li><a href="javascript:void(0)"><span class="text"> 管理办法</span></a></li>
 								</ul>
@@ -195,8 +196,7 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 					<li><a href="javascript:void(0)">About</a></li>
 				</ul>
 				<div class="copyright text-center">
-					<span>Copyright &copy; <?php $year = date('Y', time()); ?><?= ($year == 2017) ? ''
-							: '2017-' ?><?= $year ?>
+					<span>Copyright &copy; <?php $year = date('Y', time()); ?><?= ($year == 2017) ? '' : '2017-' ?><?= $year ?>
 						<strong><a target="_blank" href="http://www.xsgzs.org/">Xingsi Studio.</a></strong></span>
 					<span>All rights reserved.</span>
 				</div>

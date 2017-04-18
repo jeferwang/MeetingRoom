@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Term;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -46,6 +47,7 @@ class TermController extends Controller
 						'termName'  => $request->input('termName'),
 						'startTime' => $startTime,
 						'weekCount' => $request->input('weekCount'),
+						'default'   => !Term::exists(),
 					]);
 					$this->setResp(['status' => true, 'msg' => '添加成功']);
 				}
@@ -64,6 +66,22 @@ class TermController extends Controller
 		}
 		$del = Term::findOrFail($tId)->delete();
 		$this->setResp(['status' => true, 'msg' => '删除成功']);
+		return $this->resp;
+	}
+	
+	public function setDefault(Request $request)
+	{
+		$tId = $request->input('tId', 0);
+		try {
+			$term = Term::findOrFail($tId);
+		} catch (ModelNotFoundException $e) {
+			$this->setResp(['status' => false, 'msg' => '找不到对应的学期']);
+			return $this->resp;
+		}
+		Term::where('default', true)->update(['default' => false]);
+		$term->default = true;
+		$term->save();
+		$this->setResp(['status' => true, 'msg' => '设置成功 ! ']);
 		return $this->resp;
 	}
 }

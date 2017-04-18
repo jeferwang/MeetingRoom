@@ -55,6 +55,7 @@
 					<th>学期名称</th>
 					<th>开始日期</th>
 					<th>总周数</th>
+					<th>是否默认</th>
 					<th>操作</th>
 				</tr>
 				</thead>
@@ -64,7 +65,13 @@
 						<td>{{$term->termName}}</td>
 						<td>{{date('Y-m-d',$term->startTime)}}</td>
 						<td>{{$term->weekCount}}</td>
+						<td class="is_defalut">
+							@if($term->default)
+								<span class="badge default_yes" style="background: green;">是</span>
+							@endif
+						</td>
 						<td>
+							<button class="btn btn-success btn-xs" onclick="setCurrent('{{$term->id}}',this)">设为默认</button>
 							<button class="btn btn-danger btn-xs" onclick="delTerm('{{$term->id}}',this)">删除</button>
 						</td>
 					</tr>
@@ -156,6 +163,39 @@
 						, complete  : function () {
 							layer.closeAll('loading');
 						}
+					});
+				}
+			})
+		}
+		function setCurrent($tId, ele) {
+			var mark          = '<span class="badge default_yes" style="background: green;">是</span>';
+			var setDefaultUrl = "{{route('admin.term.default')}}";
+			$.ajax({
+				url         : setDefaultUrl
+				, method    : 'POST'
+				, data      : {_token: Laravel.csrfToken, tId: $tId}
+				, beforeSend: function () {
+					layer.load(2);
+				}
+				, complete  : function () {
+					layer.closeAll('loading');
+				}
+				, success   : function (data) {
+					if (data.status) {
+						layer.msg(data.msg, {
+							icon: 6
+						});
+						$('.default_yes').remove();
+						$(ele).parent('td').prev('td.is_defalut')[0].innerHTML = mark;
+					} else {
+						layer.alert(data.msg, {
+							icon: 5
+						});
+					}
+				}
+				, error     : function () {
+					layer.alert('网络或服务器错误!', {
+						icon: 2
 					});
 				}
 			})

@@ -18,6 +18,7 @@ class CreateTermsTable extends Migration
 				$table->string('termName')->comment('学期名称');
 				$table->integer('startTime')->comment('开始日期');
 				$table->integer('weekCount')->comment('学期总周数');
+				$table->boolean('default')->default(false)->comment('默认学期');
 				$table->timestamps();
 			});
 	}

@@ -47,7 +47,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'],
 				Route::group(['prefix' => 'term', 'as' => 'term.'],
 					function () {
 						Route::match(['get', 'post'], 'index', 'TermController@index')->name('index');
-						Route::post('del','TermController@delTerm')->name('del');
+						Route::post('del', 'TermController@delTerm')->name('del');
+						Route::post('default', 'TermController@setDefault')->name('default');
 					});
 			});
 	});
@@ -73,5 +74,7 @@ Route::group(['as' => 'frontend.'],
 				Route::post('rooms', 'RoomController@getRoomList')->name('rooms');
 				// 提交表单提交申请
 				Route::post('apply', 'ApplyController@apply')->name('apply');
+				// 根据选择的条件列出申请列表(前台)
+				Route::post('getapplylist', 'ApplyController@getApplyList')->name('get_apply_list');
 			});
 	});

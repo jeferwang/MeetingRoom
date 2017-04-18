@@ -1,8 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Apply;
+use App\Term;
+use function foo\func;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -23,15 +25,17 @@ class ApplyController extends Controller
 	 */
 	public function ajaxPass(Request $request)
 	{
-		$validator = Validator::make($request->all(), [
-			'apply_id' => 'required|Numeric',
-			'is_pass'  => ['required', Rule::in(['true', 'false'])],
-		], [
-			'apply_id.required' => '参数缺失:apply_id！',
-			'apply_id.Numeric'  => '参数异常:apply_id！',
-			'is_pass.required'  => '参数缺失:is_pass！',
-			'is_pass.in'        => '参数异常:is_pass！',
-		]);
+		$validator = Validator::make($request->all(),
+			[
+				'apply_id' => 'required|Numeric',
+				'is_pass'  => ['required', Rule::in(['true', 'false'])],
+			],
+			[
+				'apply_id.required' => '参数缺失:apply_id！',
+				'apply_id.Numeric'  => '参数异常:apply_id！',
+				'is_pass.required'  => '参数缺失:is_pass！',
+				'is_pass.in'        => '参数异常:is_pass！',
+			]);
 		if ($validator->fails()) {
 			$this->setResp(['status' => false, 'msg' => $validator->errors()->first()]);
 			return $this->resp;
@@ -72,11 +76,25 @@ class ApplyController extends Controller
 	}
 	
 	/*
+	 * Page
 	 * 前台显示当前预约情况
 	 */
 	public function applyList()
 	{
-		$applies = Apply::latest()->paginate(15);
-		return view('frontend.apply.applylist', ['applies' => $applies]);
+		$terms = Term::all();
+		$currentTerm = Term::findCurrentTerm();
+		$applyList = $currentTerm ? Term::findWeekApply($currentTerm->id) : false;
+		$currentWeek = $currentTerm ? ceil((time() - $currentTerm->startTime) / (7 * 24 * 60 * 60)) : false;
+		return view('frontend.apply.applylist', ['terms' => $terms, 'applyList' => $applyList, 'currentWeek' => $currentWeek]);
+	}
+	
+	/*
+	 * Ajax
+	 * 前台设置筛选条件之后,把符合条件的申请列出
+	 */
+	public function getApplyList(Request $request)
+	{
+		$termId = $request->input('tId');
+		return Term::findWeekApply($termId);
 	}
 }

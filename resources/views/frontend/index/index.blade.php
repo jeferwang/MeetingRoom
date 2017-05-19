@@ -9,7 +9,7 @@
 	{{--/plugins--}}
 @endsection
 @section('content')
-	<div class="container">
+	<div class="container-fluid">
 		@if($noticeOne)
 			<div class="row">
 				<div class="col-sm-12">
@@ -196,9 +196,9 @@
 	<script src="/assets/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
 	{{--/plugins--}}
 	<script>
-		var roomsUrl      = "{{route('frontend.json.rooms')}}";
-		var showNoticeUrl = '{{route('frontend.show_notice')}}?nid=';
-		var successRedirectUrl="{{route('frontend.apply_list')}}"
+		var roomsUrl           = "{{route('frontend.json.rooms')}}";
+		var showNoticeUrl      = '{{route('frontend.show_notice')}}?nid=';
+		var successRedirectUrl = "{{route('frontend.apply_list')}}"
 	</script>
 	<script src="/assets/js/frontend/index.js"></script>
 @endsection

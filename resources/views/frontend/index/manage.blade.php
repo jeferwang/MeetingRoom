@@ -18,7 +18,7 @@
 		
 		.small_title {
 			font-weight: 800;
-			font-family: 微软雅黑;
+			font-family: 微软雅黑, serif;
 		}
 		
 		h1 {

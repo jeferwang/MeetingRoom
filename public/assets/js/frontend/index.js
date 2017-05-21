@@ -1,123 +1,28 @@
-window.onload = function () {
-	$("#nav_index").addClass('active');
-};
+$().ready(function () {
+	$('#infoForm').ajaxForm();
+	$.ajax({
+		url       : querytable
+		, type    : 'get'
+		, cache   : false
+		, dataType: 'json'
+		, success : function (dat) {
+			document.getElementById("show_table").innerHTML = dat['data'];
+		}
+		, error   : function () {
+			document.getElementById("show_table").innerText = '网络服务器错误,加载失败';
+		}
+	});
+});
 //注意：导航 依赖 element 模块，否则无法进行功能性操作
-layui.use(['layer', 'element'], function () {
+layui.use(['layer', 'element', 'form'], function () {
 	var layer   = layui.layer;
 	var element = layui.element();
+	var layForm = layui.form();
 });
-$().ready(function () {
-	//	日期时间选择器
-	var time_input = $("#start_time , #end_time");
-	time_input.datetimepicker({
-		language      : 'zh-CN',
-		weekStart     : 1,
-		todayBtn      : 1,
-		autoclose     : 1,
-		todayHighlight: 1,
-		startView     : 2,
-		forceParse    : 0,
-		showMeridian  : 1
-	});
-	// 前后跳转逻辑
-	$("#next_1").click(function () {
-		$("#tab_2").click();
-	});
-	$("#next_2").click(function () {
-		$("#tab_3").click();
-	});
-	$("#next_3").click(function () {
-		$("#tab_4").click();
-	});
-	$("#preview_2").click(function () {
-		$("#tab_1").click();
-	});
-	$("#preview_3").click(function () {
-		$("#tab_2").click();
-	});
-	$("#preview_4").click(function () {
-		$("#tab_3").click();
-	});
-	$("#tab_2").click(function () {
-		var start_time = document.getElementById('start_time').value;
-		var end_time   = document.getElementById('end_time').value;
-		$.ajax({
-			type        : 'POST'
-			, url       : roomsUrl
-			, data      : {
-				start_time: start_time
-				, end_time: end_time
-				, _token  : Laravel.csrfToken
-			}
-			, beforeSend: function () {
-				layer.load(2);
-			}
-			, success   : function (data) {
-				if (data.status) {
-					layer.msg(data.msg);
-					VueTabBlock.rooms = data.data;
-				} else {
-					$("#tab_1").click();
-					layer.alert(data.msg, {
-						icon: 5
-					});
-				}
-			}
-			, error     : function () {
-				layer.alert('网络错误,请刷新重试', {
-					icon: 2
-				});
-			}
-			, complete  : function () {
-				layer.closeAll('loading');
-			}
-		});
-	});
-});
-var VueTabBlock = new Vue({
-	el    : '#tab_block'
-	, data: {
-		rooms: []
-	}
-});
-$().ready(function () {
-	$("#main_form").ajaxForm();
-});
-$("#main_form").on('submit', function (e) {
-	e.preventDefault();
-	$("#main_form").ajaxSubmit({
-		beforeSubmit: function () {
-			layer.load(2);
-		}
-		, success   : function (data) {
-			if (data.status) {
-				layer.alert(data.msg, {
-					icon      : 6
-					, closeBtn: 0
-					, btn     : ['确定']
-					, yes     : function (i) {
-						layer.close(i);
-						location.href = successRedirectUrl;
-					}
-				});
-			} else {
-				layer.alert(data.msg, {
-					icon: 5
-				});
-			}
-		}
-		, error     : function () {
-			layer.alert('网络错误,请刷新重试', {
-				icon: 2
-			});
-		}
-		, complete  : function () {
-			layer.closeAll('loading');
-		}
-	});
-});
-/*
- 弹窗显示公告
+/**
+ * 弹窗显示公告
+ * @param $nid 公告ID
+ * @param ele 包含标题信息的元素
  */
 function showNotice($nid, ele) {
 	//多窗口模式，层叠置顶
@@ -129,8 +34,59 @@ function showNotice($nid, ele) {
 		, maxmin : true
 		, content: showNoticeUrl + $nid
 		, btn    : ['关闭']
-		, yes    : function () {
-			layer.closeAll();
+	});
+}
+/**
+ * 查看详细的会议室列表
+ */
+function showMeetingroomList() {
+	var content = "";
+	for (var i = 0; i < roomList.length; i++) {
+		content += "<tr><td>" + roomList[i]['name'] + "</td><td>" + roomList[i]['address'] + "</td><td>" + roomList[i]['description'] + "</td></tr>"
+	}
+	var htmlFrame = "<table class='table table-bordered table-responsive table-striped table-hover'>" + "<tr><th>会议室名称</th><th>地点</th><th>备注</th></tr>" + content + "</table>";
+	layer.open({
+		type     : 1
+		, title  : '会议室详情'
+		, area   : ['800px', '600px']
+		, shade  : 0
+		, maxmin : true
+		, content: htmlFrame
+		, btn    : ['关闭']
+	});
+}
+/**
+ * 弹窗确认提交信息
+ */
+function confirmInfo() {
+	layer.alert('确认提交申请吗？', {
+		icon : 6
+		, btn: ['提交申请', '取消']
+		, yes: function () {
+			$('#infoForm').ajaxSubmit({
+				beforeSubmit: function () {
+					layer.load();
+				}
+				, success   : function (data) {
+					var ico = data['status'] ? 6 : 5;
+					layer.alert(data['msg'], {
+						closeBtn: false
+						, icon  : ico
+						, btn   : ['确定']
+						, yes   : function () {
+							window.location.reload(true);
+						}
+					});
+				}
+				, error     : function () {
+					layer.alert('网络错误,请刷新重试', {
+						icon: 2
+					});
+				}
+				, complete  : function () {
+					layer.closeAll('loading');
+				}
+			});
 		}
 	});
 }

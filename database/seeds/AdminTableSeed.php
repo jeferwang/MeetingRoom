@@ -1,17 +1,18 @@
 <?php
 use Illuminate\Database\Seeder;
 
-class AdminTableSeed extends Seeder {
-	
+class AdminTableSeed extends Seeder
+{
 	/**
 	 * Run the database seeds.
 	 *
 	 * @return void
 	 */
-	public function run() {
+	public function run()
+	{
 		DB::table('admins')->insert([
 			'admin_name' => 'admin',
-			'password'   => bcrypt('123456')
+			'password'   => bcrypt('11223344'),
 		]);
 	}
 }

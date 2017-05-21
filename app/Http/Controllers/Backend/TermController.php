@@ -1,15 +1,15 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use App\Term;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 /*
  * 学期控制器
  * 每学期的开始时间
- * 设定第一周的日期和本学期的总周数
+ * 设定第一周的日期
  */
 
 class TermController extends Controller
@@ -25,16 +25,16 @@ class TermController extends Controller
 				[
 					'termName'  => 'required',
 					'startTime' => 'required|date',
-					'weekCount' => 'required|Numeric|min:20|max:25',
+					//					'weekCount' => 'required|Numeric|min:20|max:25',
 				],
 				[
 					'termName.required'  => '学期名称不能为空',
 					'startTime.required' => '开始日期不能为空',
 					'startTime.date'     => '开始日期格式错误',
-					'weekCount.required' => '周期总数不能为空',
-					'weekCount.Numeric'  => '周期总数必须是数字',
-					'weekCount.min'      => '周期总数最小为20',
-					'weekCount.max'      => '周期总数最大为25',
+					//					'weekCount.required' => '周期总数不能为空',
+					//					'weekCount.Numeric'  => '周期总数必须是数字',
+					//					'weekCount.min'      => '周期总数最小为20',
+					//					'weekCount.max'      => '周期总数最大为25',
 				]);
 			if ($validator->fails()) {
 				$this->setResp(['status' => false, 'msg' => $validator->errors()->first()]);
@@ -46,8 +46,8 @@ class TermController extends Controller
 					$create = Term::create([
 						'termName'  => $request->input('termName'),
 						'startTime' => $startTime,
-						'weekCount' => $request->input('weekCount'),
-						'default'   => !Term::exists(),
+						//'weekCount' => $request->input('weekCount'),
+						//'default'   => !Term::exists(),
 					]);
 					$this->setResp(['status' => true, 'msg' => '添加成功']);
 				}
@@ -58,6 +58,9 @@ class TermController extends Controller
 		return view('backend.term.index', ['terms' => $terms]);
 	}
 	
+	/*
+	 * 删除一个学期
+	 */
 	public function delTerm(Request $request)
 	{
 		$tId = $request->input('tId', 0);
@@ -68,20 +71,20 @@ class TermController extends Controller
 		$this->setResp(['status' => true, 'msg' => '删除成功']);
 		return $this->resp;
 	}
-	
-	public function setDefault(Request $request)
-	{
-		$tId = $request->input('tId', 0);
-		try {
-			$term = Term::findOrFail($tId);
-		} catch (ModelNotFoundException $e) {
-			$this->setResp(['status' => false, 'msg' => '找不到对应的学期']);
-			return $this->resp;
-		}
-		Term::where('default', true)->update(['default' => false]);
-		$term->default = true;
-		$term->save();
-		$this->setResp(['status' => true, 'msg' => '设置成功 ! ']);
-		return $this->resp;
-	}
+
+//	public function setDefault(Request $request)
+//	{
+//		$tId = $request->input('tId', 0);
+//		try {
+//			$term = Term::findOrFail($tId);
+//		} catch (ModelNotFoundException $e) {
+//			$this->setResp(['status' => false, 'msg' => '找不到对应的学期']);
+//			return $this->resp;
+//		}
+//		Term::where('default', true)->update(['default' => false]);
+//		$term->default = true;
+//		$term->save();
+//		$this->setResp(['status' => true, 'msg' => '设置成功 ! ']);
+//		return $this->resp;
+//	}
 }

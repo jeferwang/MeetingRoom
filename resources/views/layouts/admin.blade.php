@@ -178,8 +178,8 @@ $admin_name = Cookie::get('admin_login')['admin_name'];
 								</a>
 								<ul class="nav nav-children">
 									<li><a href="{{route('admin.term.index')}}"><span class="text"> 学期/周数管理</span></a></li>
-									<li><a href="javascript:void(0)"><span class="text"> 预约须知</span></a></li>
-									<li><a href="javascript:void(0)"><span class="text"> 管理办法</span></a></li>
+									<li><a href="{{route('admin.tip.tip')}}"><span class="text"> 使用须知</span></a></li>
+									{{--<li><a href="javascript:void(0)"><span class="text"> 管理办法</span></a></li>--}}
 								</ul>
 							</li>
 						</ul>

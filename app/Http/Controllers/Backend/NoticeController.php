@@ -1,12 +1,10 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
-use function abort;
+use App\Http\Controllers\Controller;
 use App\Notice;
-use const false;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use function view;
 
 class NoticeController extends Controller
 {
@@ -18,10 +16,9 @@ class NoticeController extends Controller
 	public function index()
 	{
 		// 分页取出结果
-		$notices = Notice::paginate(10);
+		$notices = Notice::latest()->paginate(10);
 		// theme映射
 		$themeMap = ['info' => '提示', 'warning' => '警告', 'danger' => '严重'];
-		
 		// 渲染页面
 		return view('backend.notice.index', ['notices' => $notices, 'themeMap' => $themeMap]);
 	}
@@ -54,11 +51,9 @@ class NoticeController extends Controller
 				Notice::create($request->all());
 				$this->setResp(['status' => true, 'msg' => '添加公告成功']);
 			}
-			
 			// 返回Ajax结果
 			return $this->resp;
 		}
-		
 		// GET请求得到页面
 		return view('backend.notice.add');
 	}
@@ -104,11 +99,9 @@ class NoticeController extends Controller
 					$this->setResp(['status' => false, 'msg' => '保存失败']);
 				}
 			}
-			
 			// 返回Ajax结果
 			return $this->resp;
 		}
-		
 		return view('backend.notice.update', ['notice' => $notice]);
 	}
 	
@@ -130,26 +123,7 @@ class NoticeController extends Controller
 		} else {
 			$this->setResp(['status' => false, 'msg' => '删除错误,请刷新重试']);
 		}
-		
 		// 返回Ajax结果
 		return $this->resp;
-	}
-	/*
-	 * 前端显示所有公告的列表
-	 */
-	public function noticeList()
-	{
-		$nList=Notice::latest()->paginate(10);
-		return view('frontend.notice.list',['nList'=>$nList]);
-	}
-	
-	public function showNotice(Request $request)
-	{
-		$nid=$request->input('nid');
-		if(!$nid){
-		    abort('403','缺少参数');
-		}
-		$notice=Notice::findOrFail($nid);
-		return view('frontend.notice.show',['notice'=>$notice]);
 	}
 }

@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTermsTable extends Migration
+class CreateTipsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -12,14 +12,10 @@ class CreateTermsTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('terms',
+		Schema::create('tips',
 			function (Blueprint $table) {
 				$table->increments('id');
-				$table->string('termName')->comment('学期名称');
-				$table->integer('startTime')->comment('开始日期');
-//				$table->integer('weekCount')->comment('学期总周数');
-//				$table->boolean('default')->default(false)->comment('默认学期');
-				$table->softDeletes();
+				$table->text('content')->comment('主要内容');
 				$table->timestamps();
 			});
 	}
@@ -31,6 +27,6 @@ class CreateTermsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('terms');
+		Schema::dropIfExists('tips');
 	}
 }

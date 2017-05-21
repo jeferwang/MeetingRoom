@@ -1,10 +1,8 @@
 <?php
-namespace App\Http\Controllers;
+namespace app\Http\Controllers\Backend;
 
 use App\Apply;
-use App\Term;
-use function foo\func;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -58,43 +56,5 @@ class ApplyController extends Controller
 			$this->setResp(['status' => false, 'msg' => '操作失败']);
 		}
 		return $this->resp;
-	}
-	
-	// 前台提交表单进行申请
-	public function apply(Request $request)
-	{
-		$apply = new Apply();
-		$apply->fill($request->all());
-		$validate = $apply->validateData();
-		if ($validate['status']) {
-			$apply->save();
-			$this->setResp(['status' => true, 'msg' => '提交成功,请等待审核']);
-		} else {
-			$this->setResp($validate);
-		}
-		return $this->resp;
-	}
-	
-	/*
-	 * Page
-	 * 前台显示当前预约情况
-	 */
-	public function applyList()
-	{
-		$terms = Term::all();
-		$currentTerm = Term::findCurrentTerm();
-		$applyList = $currentTerm ? Term::findWeekApply($currentTerm->id) : false;
-		$currentWeek = $currentTerm ? ceil((time() - $currentTerm->startTime) / (7 * 24 * 60 * 60)) : false;
-		return view('frontend.apply.applylist', ['terms' => $terms, 'applyList' => $applyList, 'currentWeek' => $currentWeek]);
-	}
-	
-	/*
-	 * Ajax
-	 * 前台设置筛选条件之后,把符合条件的申请列出
-	 */
-	public function getApplyList(Request $request)
-	{
-		$termId = $request->input('tId');
-		return Term::findWeekApply($termId);
 	}
 }

@@ -10,6 +10,8 @@
 		<thead>
 		<tr>
 			<th>公告标题</th>
+			<th>发布时间</th>
+			<td>更新时间</td>
 			<th>主题颜色</th>
 			<th>操作</th>
 		</tr>
@@ -18,6 +20,8 @@
 		@foreach($notices as $key=>$notice)
 			<tr>
 				<td>{{$notice->title}}</td>
+				<td>{{$notice->created_at}}</td>
+				<td>{{$notice->updated_at}}</td>
 				<td><span class="badge badge-{{$notice->theme}}">{{$themeMap[$notice->theme]}}</span></td>
 				<td>
 					<button class="btn btn-warning btn-xs" onclick="updateN({{$notice->id}})">修改</button>

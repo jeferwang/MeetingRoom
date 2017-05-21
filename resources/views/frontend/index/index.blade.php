@@ -10,195 +10,143 @@
 @endsection
 @section('content')
 	<div class="container-fluid">
-		@if($noticeOne)
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="alert alert-{{$noticeOne->theme}}" onclick="showNotice('{{$noticeOne->id}}',this)" style="cursor: pointer;">
-						<span>{{$noticeOne->title}}</span>
-						<span class="pull-right">{{$noticeOne->created_at}}</span>
+		<div class="row" id="tab_block">
+			{{--Start左侧栏--}}
+			<div class="col-md-4">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						导航
+					</div>
+					<ul class="nav nav-pills nav-stacked">
+						<li><a target="_blank" href="{{route('frontend.notice_list')}}">公告列表</a></li>
+						<li><a target="_blank" href="{{route('frontend.apply_list')}}">预约情况</a></li>
+						<li><a target="_blank" href="{{route('frontend.manage')}}">管理办法</a></li>
+					</ul>
+				</div>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						使用须知
+					</div>
+					<div class="panel-body">
+						<pre style="border:none;background: none;font-size: 15px;">{{$tip}}</pre>
 					</div>
 				</div>
 			</div>
-		@endif
-		<div class="row" id="tab_block">
-			<div class="col-sm-12">
-				<form id="main_form" method="post" action="{{route('frontend.json.apply')}}"
-				      class="layui-tab layui-tab-brief"
-				      lay-filter="mainTab">
-					{{csrf_field()}}
-					<ul class="layui-tab-title">
-						<li id="tab_1" class="layui-this">选择时间</li>
-						<li id="tab_2">会议地点</li>
-						<li id="tab_3">预约信息</li>
-						<li id="tab_4">会议概要</li>
-					</ul>
-					{{--第一项内容--}}
-					<div class="layui-tab-content" id="content_1">
-						<div class="layui-tab-item layui-show panel panel-default">
-							<p id="description_1" class="panel-heading">请选择会议的开始时间和结束时间</p>
-							<div class="row panel-body time_block">
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="start_time" class="control-label">开始时间</label>
-										<div class="input-group">
-											<i class="input-group-addon"><i
-													class="glyphicon glyphicon-calendar"></i></i>
-											<input type="text" class="form-control" id="start_time" name="start_time"
-											       data-date-format="yyyy-mm-dd hh:ii:00" readonly>
-											<span class="input-group-addon">Start</span>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label for="end_time" class="control-label">结束时间</label>
-										<div class="input-group">
-											<i class="input-group-addon"><i
-													class="glyphicon glyphicon-calendar"></i></i>
-											<input type="text" class="form-control" id="end_time" name="end_time"
-											       data-date-format="yyyy-mm-dd hh:ii:00" readonly>
-											<span class="input-group-addon">End</span>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row foot_btn">
-								<div class="col-sm-2 col-sm-push-10 next_block">
-									<a href="javascript:void(0)" class="btn btn-success" id="next_1">
-										下一步 <i class="glyphicon glyphicon-chevron-right"></i>
-									</a>
-								</div>
+			{{--End左侧栏--}}
+			{{--Start右侧栏--}}
+			<div class="col-md-8">
+				@if($noticeOne)
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="alert alert-{{$noticeOne->theme}}" onclick="showNotice('{{$noticeOne->id}}',this)" style="cursor: pointer;">
+								<span>{{$noticeOne->title}}</span>
+								<span class="pull-right">{{$noticeOne->created_at}}</span>
 							</div>
 						</div>
-						{{--第二项内容--}}
-						<div class="layui-tab-item" id="content_2">
-							<div class="layui-tab-item layui-show panel panel-default">
-								<p id="description_1" class="panel-heading">
-									请您选择需要预约的会议室
-								</p>
-								<div class="row panel-body time_block">
-									<ul class="list-group">
-										<li class="list-group-item" v-for="room in rooms">
-											<label>
-												<input type="radio" name="room_id" :value="room.id" v-if="room.usable">
-												<input type="radio" name="room_id" :value="room.id" disabled
-												       v-if="!room.usable">
-												<span>@{{ room.name }}</span>
-												<span v-if="!room.usable">(已被预约)</span>
-											</label>
-										</li>
-									</ul>
-								</div>
-								<div class="row foot_btn">
-									<div class="col-sm-2 preview_block">
-										<a href="javascript:void(0)" class="btn btn-info" id="preview_2">
-											<i class="glyphicon glyphicon-chevron-left"></i> 上一步
-										</a>
-									</div>
-									<div class="col-sm-2 col-sm-push-8 next_block">
-										<a href="javascript:void(0)" class="btn btn-success" id="next_2">
-											下一步 <i class="glyphicon glyphicon-chevron-right"></i>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						{{--第三项内容--}}
-						<div class="layui-tab-item" id="content_3">
-							<div class="layui-tab-item layui-show panel panel-default">
-								<p id="description_1" class="panel-heading">
-									请输入预约者的基本信息
-								</p>
-								<div class="row panel-body time_block">
-									<div class="form-group">
-										<label for="people_name" class="control-label">预约者姓名</label>
-										<div class="input-group">
-											<i class="input-group-addon"><i class="glyphicon glyphicon-user"></i></i>
-											<input type="text" id="people_name" name="people_name" class="form-control">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="people_tel" class="control-label">联系方式</label>
-										<div class="input-group">
-											<i class="input-group-addon"><i
-													class="glyphicon glyphicon-earphone"></i></i>
-											<input type="text" id="people_tel" name="people_tel" class="form-control">
-										</div>
-									</div>
-								</div>
-								<div class="row foot_btn">
-									<div class="col-sm-2 preview_block">
-										<a href="javascript:void(0)" class="btn btn-info" id="preview_3">
-											<i class="glyphicon glyphicon-chevron-left"></i> 上一步
-										</a>
-									</div>
-									<div class="col-sm-2 col-sm-push-8 next_block">
-										<a href="javascript:void(0)" class="btn btn-success" id="next_3">
-											下一步 <i class="glyphicon glyphicon-chevron-right"></i>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						{{--第四项内容--}}
-						<div class="layui-tab-item" id="content_4">
-							<div class="layui-tab-item layui-show panel panel-default">
-								<p id="description_1" class="panel-heading">
-									请填写会议标题和概要
-								</p>
-								<div class="row panel-body time_block">
-									<div class="form-group">
-										<label for="meeting_title" class="control-label">会议标题</label>
-										<div class="input-group">
-											<i class="input-group-addon"><i class="glyphicon glyphicon-star"></i></i>
-											<input type="text" id="meeting_title" name="meeting_title"
-											       class="form-control">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="meeting_description" class="control-label">会议概要(可留空)</label>
-										<div class="input-group">
-											<i class="input-group-addon"><i
-													class="glyphicon glyphicon-list-alt"></i></i>
-											<textarea id="meeting_description" name="meeting_description" rows="3"
-											          class="form-control"></textarea>
-										</div>
-									</div>
-								</div>
-								<div class="row foot_btn">
-									<div class="col-sm-2 preview_block">
-										<a href="javascript:void(0)" class="btn btn-info" id="preview_4">
-											<i class="glyphicon glyphicon-chevron-left"></i> 上一步
-										</a>
-									</div>
-									<div class="col-sm-2 col-sm-push-8 next_block">
-										<button type="submit" class="btn btn-success" id="finish">
-											<i class="glyphicon glyphicon-send"></i> 完成
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						{{--内容结束--}}
 					</div>
-					{{--内容主体结束--}}
+				@endif
+				<div class="well">
+					<p style="text-align: center;margin-bottom: 5px;">状态：
+						<span style="color:white;background: grey;border-radius: 3px;">未审核</span>
+						<span style="color:white;background: green;border-radius: 3px;">通过</span>
+						<span style="color:white;background: red;border-radius: 3px;">未通过</span>
+					</p>
+					<div id="show_table" style="max-height: 200px;overflow: hidden;overflow-y: auto;text-align: center;">
+						<i class="layui-icon" style="font-size: 25px;">&#xe63d;</i>
+					</div>
+				</div>
+				<form method="post" action="{{route('frontend.apply')}}" class="well" id="infoForm">
+					{{csrf_field()}}
+					{{--Start会议时间选择--}}
+					<label>请选择会议时间</label>
+					<div class="form-group form-inline">
+						<select name="term_id" id="term_id" class="form-control">
+							<option value>===请选择学期===</option>
+							@foreach($termList as $term)
+								<option value="{{$term->id}}">{{$term->termName}}</option>
+							@endforeach
+						</select>
+						<select name="weeknum" id="weeknum" class="form-control">
+							<option value>===请选择周数===</option>
+							@for($i=1;$i<=20;$i++)
+								<option value="{{$i}}">第{{$i}}周</option>
+							@endfor
+						</select>
+						<select name="week" id="week" class="form-control">
+							<option value>===请选择星期===</option>
+							<?php $weekWord = [null, '一', '二', '三', '四', '五', '六', '日'] ?>
+							@for($i=1;$i<=7;$i++)
+								<option value="{{$i}}">星期{{$weekWord[$i]}}</option>
+							@endfor
+						</select>
+						<select class="form-control" id="meeting_time" name="meeting_time" required>
+							<option value>===请选择时间===</option>
+							<optgroup label="上午">
+								<option value="1">上午第一大节</option>
+								<option value="2">上午第二大节</option>
+							</optgroup>
+							<optgroup label="下午">
+								<option value="3">下午第一大节</option>
+								<option value="4">下午第二大节</option>
+							</optgroup>
+							<optgroup label="晚上">
+								<option value="5">晚上第一大节</option>
+							</optgroup>
+						</select>
+					</div>
+					{{--End会议时间选择--}}
+					{{--Start会议地点选择--}}
+					{{--overflow样式清除layui的radio产生的问题--}}
+					<div class="form-group" style="overflow: hidden;">
+						<label for="room_id">
+							会议地点*&emsp;
+							<a class="btn btn-xs btn-info" href="javascript:void(0)" onclick="showMeetingroomList()">查看会议室详情</a>
+						</label>
+						<select class="form-control" name="room_id" id="room_id" required>
+							<option value>===请选择会议室===</option>
+							@foreach($roomList as $key=>$room)
+								<option value="{{$room->id}}">{{$room->name}}</option>
+							@endforeach
+						</select>
+					</div>
+					{{--End会议地点选择--}}
+					{{--Start会议详情--}}
+					<div class="form-group">
+						<label for="meeting_title">会议标题*</label>
+						<input type="text" class="form-control" name="meeting_title" id="meeting_title" required>
+						<label for="meeting_description">会议概要</label>
+						<textarea class="form-control" name="meeting_description" id="meeting_description" rows="3"></textarea>
+					</div>
+					{{--End会议详情--}}
+					{{--Start申请人信息--}}
+					<div class="form-group">
+						<label for="people_name">申请人姓名*</label>
+						<input type="text" class="form-control" name="people_name" id="people_name" required>
+						<label for="people_tel">手机号*</label>
+						<input type="text" class="form-control" name="people_tel" id="people_tel" required>
+					</div>
+					{{--End申请人信息--}}
+					<div>
+						<input type="button" class="btn btn-primary" value="提交申请" onclick="confirmInfo()">
+					</div>
 				</form>
-				{{--标签页结束--}}
 			</div>
+			{{--End右侧栏--}}
 		</div>
 	</div>
 @endsection
 @section('foot')
 	{{--plugins--}}
 	<script src="/assets/jqueryForm/jquery.form.min.js"></script>
-	<script src="/assets/vue/vue.js"></script>
-	<script src="/assets/datetimepicker/bootstrap-datetimepicker.js"></script>
-	<script src="/assets/datetimepicker/bootstrap-datetimepicker.zh-CN.js"></script>
 	{{--/plugins--}}
 	<script>
-		var roomsUrl           = "{{route('frontend.json.rooms')}}";
 		var showNoticeUrl      = '{{route('frontend.show_notice')}}?nid=';
-		var successRedirectUrl = "{{route('frontend.apply_list')}}"
+		var successRedirectUrl = "{{route('frontend.apply_list')}}";
+		var querytable         = "{{route('frontend.query_table')}}";
+		var roomList           = {!! json_encode($roomList) !!};
 	</script>
 	<script src="/assets/js/frontend/index.js"></script>
 @endsection
+
+
+

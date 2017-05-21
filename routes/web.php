@@ -1,5 +1,7 @@
 <?php
 // 后台
+use function foo\func;
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.'],
 	function () {
 		// 自动跳转
@@ -24,31 +26,36 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'],
 				// 活动室
 				Route::group(['prefix' => 'room', 'as' => 'room.'],
 					function () {
-						Route::get('index', 'RoomController@index')->name('index');
-						Route::match(['get', 'post'], 'add', 'RoomController@add')->name('add');
-						Route::match(['get', 'post'], 'update/{room_id}', 'RoomController@update')->name('update');
-						Route::match(['get', 'post'], 'delete/{room_id}', 'RoomController@delete')->name('delete');
+						Route::get('index', 'Backend\RoomController@index')->name('index');
+						Route::match(['get', 'post'], 'add', 'Backend\RoomController@add')->name('add');
+						Route::match(['get', 'post'], 'update/{room_id}', 'Backend\RoomController@update')->name('update');
+						Route::match(['get', 'post'], 'delete/{room_id}', 'Backend\RoomController@delete')->name('delete');
 					});
 				// 预约审核
 				Route::group(['prefix' => 'apply', 'as' => 'apply.'],
 					function () {
-						Route::get('index', 'ApplyController@index')->name('index');
-						Route::post('pass', 'ApplyController@ajaxPass')->name('pass');
+						Route::get('index', 'Backend\ApplyController@index')->name('index');
+						Route::post('pass', 'Backend\ApplyController@ajaxPass')->name('pass');
 					});
 				// 公告管理
 				Route::group(['prefix' => 'notice', 'as' => 'notice.'],
 					function () {
-						Route::get('index', 'NoticeController@index')->name('index');
+						Route::get('index', 'Backend\NoticeController@index')->name('index');
 						Route::match(['get', 'post'], 'add', 'NoticeController@noticeAdd')->name('add');
-						Route::post('del', 'NoticeController@noticeDel')->name('del');
-						Route::match(['get', 'post'], 'update', 'NoticeController@noticeUpdate')->name('update');
+						Route::post('del', 'Backend\NoticeController@noticeDel')->name('del');
+						Route::match(['get', 'post'], 'update', 'Backend\NoticeController@noticeUpdate')->name('update');
 					});
 				// 学期/周数管理
 				Route::group(['prefix' => 'term', 'as' => 'term.'],
 					function () {
-						Route::match(['get', 'post'], 'index', 'TermController@index')->name('index');
-						Route::post('del', 'TermController@delTerm')->name('del');
-						Route::post('default', 'TermController@setDefault')->name('default');
+						Route::match(['get', 'post'], 'index', 'Backend\TermController@index')->name('index');
+						Route::post('del', 'Backend\TermController@delTerm')->name('del');
+						Route::post('default', 'Backend\TermController@setDefault')->name('default');
+					});
+				//使用提示管理
+				Route::group(['prefix' => 'tip', 'as' => 'tip.'],
+					function () {
+						Route::match(['get', 'post'], 'index', 'Backend\TipController@index')->name('tip');
 					});
 			});
 	});
@@ -58,23 +65,17 @@ Route::group(['as' => 'frontend.'],
 		// 首页
 		Route::get('', 'Frontend\IndexController@index')->name('index');
 		// 预约列表
-		Route::get('applylist', 'ApplyController@applyList')->name('apply_list');
-		// 管理办法
+		Route::get('applylist', 'Frontend\ApplyController@applyList')->name('apply_list');
+		// 管理办法:直接返回视图
 		Route::get('manage',
 			function () {
 				return view('frontend.index.manage');
 			})->name('manage');
 		// 公告列表
-		Route::get('noticelist', 'NoticeController@noticeList')->name('notice_list');
-		Route::get('shownotice', 'NoticeController@showNotice')->name('show_notice');
-		// 前端js接口
-		Route::group(['prefix' => 'json', 'as' => 'json.'],
-			function () {
-				// 获取符合条件的会议室列表
-				Route::post('rooms', 'RoomController@getRoomList')->name('rooms');
-				// 提交表单提交申请
-				Route::post('apply', 'ApplyController@apply')->name('apply');
-				// 根据选择的条件列出申请列表(前台)
-				Route::post('getapplylist', 'ApplyController@getApplyList')->name('get_apply_list');
-			});
+		Route::get('noticelist', 'Frontend\NoticeController@noticeList')->name('notice_list');
+		Route::get('shownotice', 'Frontend\NoticeController@showNotice')->name('show_notice');
+		// 提交会议室申请
+		Route::post('apply', 'Frontend\ApplyController@apply')->name('apply');
+		// 根据学期ID和周数ID查询那一周的预约信息
+		Route::match(['get', 'post'], 'querytable', 'Frontend\ApplyController@queryTable')->name('query_table');
 	});

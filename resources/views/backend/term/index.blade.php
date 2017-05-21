@@ -10,6 +10,9 @@
 @endsection
 @section('content')
 	<div class="container-fluid">
+		<div class="alert alert-danger">
+			请勿添加错误的和重复的学期到表中,请勿删除已经使用过和正在使用中的学期
+		</div>
 		<!--添加表单-->
 		<div class="row" id="addForm">
 			<div class="panel panel-default">
@@ -30,16 +33,16 @@
 							<input type="text" id="startTime" name="startTime" class="form-control" data-date-format="yyyy-mm-dd">
 						</div>
 					</div>
-					<div class="col-sm-3">
-						<div class="input-group">
-							<label class="input-group-addon" for="weekCount">总周数</label>
-							<select id="weekCount" name="weekCount" class="form-control">
-								@for($i=20;$i<=25;$i++)
-									<option value="{{$i}}">{{$i}}周</option>
-								@endfor
-							</select>
-						</div>
-					</div>
+					{{--<div class="col-sm-3">--}}
+					{{--<div class="input-group">--}}
+					{{--<label class="input-group-addon" for="weekCount">总周数</label>--}}
+					{{--<select id="weekCount" name="weekCount" class="form-control">--}}
+					{{--@for($i=20;$i<=25;$i++)--}}
+					{{--<option value="{{$i}}">{{$i}}周</option>--}}
+					{{--@endfor--}}
+					{{--</select>--}}
+					{{--</div>--}}
+					{{--</div>--}}
 					<div class="col-sm-3">
 						<button type="submit" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-check"></i> 添加</button>
 					</div>
@@ -54,8 +57,8 @@
 				<tr>
 					<th>学期名称</th>
 					<th>开始日期</th>
-					<th>总周数</th>
-					<th>是否默认</th>
+					{{--<th>总周数</th>--}}
+					{{--<th>是否默认</th>--}}
 					<th>操作</th>
 				</tr>
 				</thead>
@@ -64,14 +67,14 @@
 					<tr class="well">
 						<td>{{$term->termName}}</td>
 						<td>{{date('Y-m-d',$term->startTime)}}</td>
-						<td>{{$term->weekCount}}</td>
-						<td class="is_defalut">
-							@if($term->default)
-								<span class="badge default_yes" style="background: green;">是</span>
-							@endif
-						</td>
+						{{--<td>{{$term->weekCount}}</td>--}}
+						{{--<td class="is_defalut">--}}
+						{{--@if($term->default)--}}
+						{{--<span class="badge default_yes" style="background: green;">是</span>--}}
+						{{--@endif--}}
+						{{--</td>--}}
 						<td>
-							<button class="btn btn-success btn-xs" onclick="setCurrent('{{$term->id}}',this)">设为默认</button>
+							{{--<button class="btn btn-success btn-xs" onclick="setCurrent('{{$term->id}}',this)">设为默认</button>--}}
 							<button class="btn btn-danger btn-xs" onclick="delTerm('{{$term->id}}',this)">删除</button>
 						</td>
 					</tr>

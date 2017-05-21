@@ -10,9 +10,10 @@
 		<table class="table table-bordered table-responsive table-striped table-hover">
 			<thead>
 			<tr>
+				<th>预约学期</th>
+				<th>周数</th>
+				<th>星期</th>
 				<th>会议室</th>
-				<th>开始时间</th>
-				<th>结束时间</th>
 				<th>预约者姓名</th>
 				<th>联系方式</th>
 				<th>会议标题</th>
@@ -22,11 +23,13 @@
 			</tr>
 			</thead>
 			<tbody>
+			<?php $weekList = [null, '一', '二', '三', '四', '五', '六', '日'] ?>
 			@foreach($applies as $apply)
 				<tr>
+					<td>{{$apply->term->termName}}</td>
+					<td>第{{$apply->weeknum}}周</td>
+					<td>星期{{$weekList[$apply->week]}}</td>
 					<td>{{$apply->room->name}}</td>
-					<td>{{date('Y-m-d H:i:s',$apply->start_time)}}</td>
-					<td>{{date('Y-m-d H:i:s',$apply->end_time)}}</td>
 					<td>{{$apply->people_name}}</td>
 					<td>{{$apply->people_tel}}</td>
 					<td>{{$apply->meeting_title}}</td>
@@ -52,7 +55,7 @@
 			@endforeach
 			</tbody>
 			<tr>
-				<td colspan="9"
+				<td colspan="10"
 				    style="text-align: center;">{{((string)$applies->links()=="")? '没有更多内容了' : $applies->links()}}</td>
 			</tr>
 		</table>
@@ -68,42 +71,42 @@
 			var msg  = $pass ? '确定要【审核通过】吗？' : '确定要【审核不通过】吗？';
 			var icon = $pass ? 6 : 5;
 			layer.alert(msg, {
-				icon: icon
+				icon : icon
 				, btn: ['确定', '取消']
 				, yes: function (i) {
 					layer.close(i);
 					// 发出Ajax
 					if (!$pass) {
 						layer.prompt({
-							title:'请填写不通过的理由',
-							formType: 2,
+							title    : '请填写不通过的理由',
+							formType : 2,
 							maxlength: 255
-						}, function (reason,index) {
+						}, function (reason, index) {
 							layer.close(index);
-							ajaxPass($id, $pass,reason);
+							ajaxPass($id, $pass, reason);
 						});
-					}else{
-						ajaxPass($id, $pass,'');
+					} else {
+						ajaxPass($id, $pass, '');
 					}
 				}
 			});
 		}
 		var passUrl = "{{route('admin.apply.pass')}}";
-		function ajaxPass($apply_id, $pass,$reason) {
+		function ajaxPass($apply_id, $pass, $reason) {
 			$.ajax({
-				type: 'POST'
-				, url: passUrl
-				, data: {'apply_id': $apply_id, 'is_pass': $pass, '_token': Laravel.csrfToken,'reason':$reason}
+				type        : 'POST'
+				, url       : passUrl
+				, data      : {'apply_id': $apply_id, 'is_pass': $pass, '_token': Laravel.csrfToken, 'reason': $reason}
 				, beforeSend: function () {
 					layer.load(2);
 				}
-				, success: function (data) {
+				, success   : function (data) {
 					var ico = data.status ? 6 : 5;
 					layer.alert(data.msg, {
-						icon: ico
+						icon      : ico
 						, closeBtn: 0
-						, btn: ['确定']
-						, yes: function (i) {
+						, btn     : ['确定']
+						, yes     : function (i) {
 							layer.close(i);
 							if (data.msg) {
 								location.reload(true);
@@ -111,12 +114,12 @@
 						}
 					});
 				}
-				, error: function () {
+				, error     : function () {
 					layer.alert('网络错误,请刷新重试', {
 						icon: 2
 					});
 				}
-				, complete: function () {
+				, complete  : function () {
 					layer.closeAll('loading');
 				}
 			});

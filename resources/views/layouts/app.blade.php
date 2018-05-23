@@ -11,6 +11,9 @@
 		body, div, p, h1, h2, h3, h4, h5, h6 {
 			font-family: 微软雅黑, serif;
 		}
+		div,form,select,input,nav,p,li,a{
+			border-radius: 0 !important;
+		}
 	</style>
 	@yield('head')
 	<script>
@@ -22,7 +25,7 @@
 <body>
 {{--导航--}}
 <nav class="navbar navbar-default" role="navigation">
-	<div class="container-fluid">
+	<div class="container">
 		<a class="navbar-brand" href="/">HPU会议室预约系统</a>
 		{{--<div class="navbar-header">--}}
 		{{--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">--}}

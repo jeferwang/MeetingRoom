@@ -21,7 +21,7 @@ class AdminController extends Controller
 		if ($request->isMethod('post')) {
 			return $this->change($request);
 		}
-		$admin = Admin::where('admin_name', Cookie::get('admin_login')['admin_name'])->first();
+		$admin = Admin::where('admin_name', json_decode(Cookie::get('admin_login'),true)['admin_name'])->first();
 		return view('backend.admin.change_info', ['admin' => $admin]);
 	}
 	
@@ -31,7 +31,7 @@ class AdminController extends Controller
 		 *  密码123456 Hash $2y$10$FRiKbd9k6bUxqFGdNsKD1OrKMXy8ZObqA.Y0oOp07BJ.FxB6Rz8AG
 		 */
 		$resp = [];
-		$cookieAdminName = Cookie::get('admin_login')['admin_name'];
+		$cookieAdminName = json_decode(Cookie::get('admin_login'),true)['admin_name'];
 		$admin = Admin::where('admin_name', $cookieAdminName)->first();
 		if ($request->input('type') == 'name') {
 			$validator = Validator::make($request->all(), [

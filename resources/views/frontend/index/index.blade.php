@@ -9,7 +9,7 @@
 	{{--/plugins--}}
 @endsection
 @section('content')
-	<div class="container-fluid">
+	<div class="container">
 		<div class="row" id="tab_block">
 			{{--Start左侧栏--}}
 			<div class="col-md-4">
@@ -110,6 +110,7 @@
 						</select>
 					</div>
 					{{--End会议地点选择--}}
+					<hr>
 					{{--Start会议详情--}}
 					<div class="form-group">
 						<label for="meeting_title">会议标题*</label>
@@ -118,14 +119,20 @@
 						<textarea class="form-control" name="meeting_description" id="meeting_description" rows="3"></textarea>
 					</div>
 					{{--End会议详情--}}
+					<hr>
 					{{--Start申请人信息--}}
-					<div class="form-group">
-						<label for="people_name">申请人姓名*</label>
-						<input type="text" class="form-control" name="people_name" id="people_name" required>
-						<label for="people_tel">手机号*</label>
-						<input type="text" class="form-control" name="people_tel" id="people_tel" required>
+					<div class="form-group form-horizontal row">
+						<div class="col-md-6">
+							<label for="people_name">申请人姓名*</label>
+							<input type="text" class="form-control" name="people_name" id="people_name" required>
+						</div>
+						<div class="col-md-6">
+							<label for="people_tel">手机号*</label>
+							<input type="text" class="form-control" name="people_tel" id="people_tel" required>
+						</div>
 					</div>
 					{{--End申请人信息--}}
+					<hr>
 					<div>
 						<input type="button" class="btn btn-primary" value="提交申请" onclick="confirmInfo()">
 					</div>

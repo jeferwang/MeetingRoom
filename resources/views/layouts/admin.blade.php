@@ -1,6 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Cookie;
-$admin_name = Cookie::get('admin_login')['admin_name'];
+$admin_name = json_decode(Cookie::get('admin_login'),true)['admin_name'];
 ?>
 	<!DOCTYPE html>
 <html lang="en">

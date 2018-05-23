@@ -77,7 +77,7 @@ class ApplyController extends Controller
 	public function queryTable(Request $request)
 	{
 		if ($request->isMethod('post')) {
-			$validator = validator($request->all(),
+			$validator = validator($request->file(),
 				[
 					'term_id' => 'required|numeric',
 					'weeknum' => 'required|numeric',

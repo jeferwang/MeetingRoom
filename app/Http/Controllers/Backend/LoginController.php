@@ -34,7 +34,7 @@ class LoginController extends Controller
 			$validator->errors()->add('password', '登录失败,请检查用户名或密码是否正确');
 			return redirect(route('admin.login_page'))->withErrors($validator)->withInput();
 		}
-		$admin_login = Cookie::make('admin_login', ['admin_name' => $admin->admin_name, 'admin_id' => $admin->id]);
+		$admin_login = Cookie::make('admin_login', json_encode(['admin_name' => $admin->admin_name, 'admin_id' => $admin->id]));
 		return redirect(route('admin.index'))->withCookie($admin_login);
 	}
 	

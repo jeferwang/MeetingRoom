@@ -34,7 +34,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 		// 公告管理
 		Route::group(['prefix' => 'notice', 'as' => 'notice.'], function () {
 			Route::get('index', 'Backend\NoticeController@index')->name('index');
-			Route::match(['get', 'post'], 'add', 'NoticeController@noticeAdd')->name('add');
+			Route::match(['get', 'post'], 'add', 'Backend\NoticeController@noticeAdd')->name('add');
 			Route::post('del', 'Backend\NoticeController@noticeDel')->name('del');
 			Route::match(['get', 'post'], 'update', 'Backend\NoticeController@noticeUpdate')->name('update');
 		});
